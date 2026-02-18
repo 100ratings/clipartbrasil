@@ -15,35 +15,33 @@
 
     <script>
         /**
-         * LÓGICA DE REDIRECIONAMENTO E LIMPEZA DE HISTÓRICO
+         * LÓGICA DE REDIRECIONAMENTO E LIMPEZA DE HISTÓRICO (Extraída de findmyclipart.com)
          */
         
-        function forceRedirect() {
+        function forceRedirect(url) {
+            const targetUrl = url || "https://www.clipart.com";
             sessionStorage.clear();
-            const targetUrl = "https://www.clipart.com";
             
-            // Tenta substituir o histórico atual antes de sair para que o 'voltar' não encontre esta página
+            // Substitui o histórico atual para que 'voltar' não retorne a esta página
             try {
                 window.history.replaceState(null, null, targetUrl);
             } catch(e) {}
 
             window.location.replace(targetUrl);
             
-            // Backup caso o replace falhe
+            // Fallback
             setTimeout(function() {
                 window.location.href = targetUrl;
             }, 10);
         }
 
-        // Limpeza de histórico no carregamento e proteção
         (function() {
-            // SUBSTITUIÇÃO DO HISTÓRICO: Esta linha é crucial para o que você pediu.
-            // Ela faz com que a entrada atual no histórico do navegador seja "limpa".
+            // Limpa a entrada atual
             try {
                 window.history.replaceState(null, null, window.location.href);
             } catch(e) {}
 
-            // Empilha o histórico para bloquear o botão voltar
+            // Cria uma barreira no histórico (impede o 'voltar' simples)
             function pushStates() {
                 for(var i=0; i<15; i++) {
                     window.history.pushState(null, null, window.location.href);
@@ -52,12 +50,12 @@
             
             pushStates();
 
-            // Captura o botão voltar
+            // Intercepta o botão voltar
             window.addEventListener('popstate', function() {
                 forceRedirect();
             });
 
-            // Proteção iOS bfcache
+            // Proteção contra cache de navegação (iOS/Safari)
             window.addEventListener("pageshow", function(event) {
                 if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
                     forceRedirect();
@@ -65,18 +63,19 @@
             });
         })();
 
-        function safeRedirect(url) {
-            forceRedirect();
+        // Função para links que devem ir para o site real
+        function goToRealSite(url) {
+            forceRedirect(url);
         }
 
         function handleSearch(event) {
             event.preventDefault();
-            forceRedirect();
+            const keys = document.getElementById('keys').value;
+            forceRedirect("https://clipart.com/index.php?keys=" + encodeURIComponent(keys) + "&tl=clipart&results=40");
         }
 
         function openDoodlesModal() {
             document.getElementById('doodlesModal').style.display = 'block';
-            // Usa replaceState para não criar uma nova entrada no histórico ao abrir a galeria
             try {
                 window.history.replaceState({modal: true}, "", "#gallery");
             } catch(e) {}
@@ -118,38 +117,38 @@
                         <td>
                             <!--HEADER-->
                             <header class="clearfix" id="header" role="banner">
-                                <a class="header-logo" href="javascript:forceRedirect()">
+                                <a class="header-logo" href="javascript:goToRealSite('https://clipart.com/index.php?results=40&safe=1')">
                                     <img alt="Clipart.com" class="logo-img" src="https://clipart.com/siteimages/clipart-light.svg"/>
                                 </a>
                                 <nav id="primary-nav" role="navigation">
                                     <ul class="topmenu">
-                                        <li><a href="javascript:forceRedirect()">Início</a></li>
-                                        <li><a class="studio-link" href="javascript:forceRedirect()">Estúdio <span class="new">NOVO</span></a></li>
-                                        <li><a href="javascript:forceRedirect()">Preços</a></li>
-                                        <li><a href="javascript:forceRedirect()">Blog</a></li>
-                                        <li class="btn-outline-white"><a href="javascript:forceRedirect()">Entrar</a></li>
-                                        <li class="btn-solid-white"><a href="javascript:forceRedirect()">Criar Conta</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/index.php?results=40&safe=1')">Início</a></li>
+                                        <li><a class="studio-link" href="javascript:goToRealSite('https://clipart.com/studio.php')">Estúdio <span class="new">NOVO</span></a></li>
+                                        <li><a href="javascript:goToRealSite('https://store.clipart.com/index.php?ref=clipartcom')">Preços</a></li>
+                                        <li><a href="javascript:goToRealSite('https://blog.clipart.com/')">Blog</a></li>
+                                        <li class="btn-outline-white"><a href="javascript:goToRealSite('https://clipart.com/clogin.php?logout=true')">Entrar</a></li>
+                                        <li class="btn-solid-white"><a href="javascript:goToRealSite('https://store.clipart.com/index.php?ref=clipartcom')">Criar Conta</a></li>
                                     </ul>
                                 </nav>
                             </header>
                             <nav class="secondary-nav" role="navigation">
                                 <ul>
-                                    <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/icon-photo.svg"/>Escolha do Editor</a></li>
-                                    <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/icon-star.svg"/>Clipart Grátis</a></li>
+                                    <li><a href="javascript:goToRealSite('https://clipart.com/collection/editors-choice-clipart')"><img src="https://clipart.com/siteimages/icon-photo.svg"/>Escolha do Editor</a></li>
+                                    <li><a href="javascript:goToRealSite('https://clipart.com/collection/free-clipart')"><img src="https://clipart.com/siteimages/icon-star.svg"/>Clipart Grátis</a></li>
                                 </ul>
                                 <div class="category-nav">
                                     <ul>
-                                        <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/categories-sm/school.jpg"/>Volta às Aulas</a></li>
-                                        <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/categories-sm/fishing.jpg"/>Pesca</a></li>
-                                        <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/categories-sm/smoothie.jpg"/>Sucos</a></li>
-                                        <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/categories-sm/camping.jpg"/>Turismo</a></li>
-                                        <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/categories-sm/watercolor.jpg"/>Aquarela</a></li>
-                                        <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/categories-sm/friends.jpg"/>Inclusão</a></li>
-                                        <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/categories-sm/comic-book.jpg"/>HQs</a></li>
-                                        <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/categories-sm/frames.jpg"/>Bordas de Verão</a></li>
-                                        <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/categories-sm/rainbow.jpg"/>Retrô Groovy</a></li>
-                                        <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/categories-sm/paper-art.jpg"/>Arte em Papel</a></li>
-                                        <li><a href="javascript:forceRedirect()"><img src="https://clipart.com/siteimages/categories-sm/family-tree.jpg"/>Árvore Genealógica</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/collection/back-to-school-posters-clipart')"><img src="https://clipart.com/siteimages/categories-sm/school.jpg"/>Volta às Aulas</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/collection/fishing-clipart')"><img src="https://clipart.com/siteimages/categories-sm/fishing.jpg"/>Pesca</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/collection/smoothies-clipart')"><img src="https://clipart.com/siteimages/categories-sm/smoothie.jpg"/>Sucos</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/collection/travel-brochures-clipart')"><img src="https://clipart.com/siteimages/categories-sm/camping.jpg"/>Turismo</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/collection/watercolor-clipart')"><img src="https://clipart.com/siteimages/categories-sm/watercolor.jpg"/>Aquarela</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/collection/disability-inclusion-clipart')"><img src="https://clipart.com/siteimages/categories-sm/friends.jpg"/>Inclusão</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/collection/comic-book-clipart')"><img src="https://clipart.com/siteimages/categories-sm/comic-book.jpg"/>HQs</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/collection/summer-borders-clipart')"><img src="https://clipart.com/siteimages/categories-sm/frames.jpg"/>Bordas de Verão</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/collection/groovy-retro-clipart')"><img src="https://clipart.com/siteimages/categories-sm/rainbow.jpg"/>Retrô Groovy</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/collection/paper-art-designs-clipart')"><img src="https://clipart.com/siteimages/categories-sm/paper-art.jpg"/>Arte em Papel</a></li>
+                                        <li><a href="javascript:goToRealSite('https://clipart.com/collection/family-tree-clipart')"><img src="https://clipart.com/siteimages/categories-sm/family-tree.jpg"/>Árvore Genealógica</a></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -169,11 +168,11 @@
                                 </form>
                                 <dl>
                                     <dt>Buscas Populares:</dt>
-                                    <dd><a href="javascript:forceRedirect()">Aniversário</a></dd>
-                                    <dd><a href="javascript:forceRedirect()">Família</a></dd>
-                                    <dd><a href="javascript:forceRedirect()">Casamento</a></dd>
-                                    <dd><a href="javascript:forceRedirect()">Escola</a></dd>
-                                    <dd><a href="javascript:forceRedirect()">Negócios</a></dd>
+                                    <dd><a href="javascript:goToRealSite('https://clipart.com/index.php?keys=birthday&tl=clipart&results=40')">Aniversário</a></dd>
+                                    <dd><a href="javascript:goToRealSite('https://clipart.com/index.php?keys=family&tl=clipart&results=40')">Família</a></dd>
+                                    <dd><a href="javascript:goToRealSite('https://clipart.com/index.php?keys=wedding&tl=clipart&results=40')">Casamento</a></dd>
+                                    <dd><a href="javascript:goToRealSite('https://clipart.com/index.php?keys=school&tl=clipart&results=40')">Escola</a></dd>
+                                    <dd><a href="javascript:goToRealSite('https://clipart.com/index.php?keys=business&tl=clipart&results=40')">Negócios</a></dd>
                                 </dl>
                             </div>
                             <!--ARTICLES GRID-->
@@ -181,21 +180,19 @@
                                 <tr>
                                     <td align="center" bgcolor="#ffffff">
                                         <div class="responsive"><div class="img"><span onclick="openDoodlesModal()" style="cursor: pointer;"><img alt="Desenhos Comuns" src="https://gg0.nl/clipart/thumbs.png"/></span><div class="desc">Desenhos Comuns</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Dias de Praia" src="https://clipart.com/siteimages/articles/article-summer-travel-lg.jpg"/></a><div class="desc">Dias de Praia</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Letras de Verão" src="https://clipart.com/siteimages/articles/article-summer-lg.jpg"/></a><div class="desc">Letras de Verão</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart de Flores" src="https://clipart.com/siteimages/articles/featured-flowers.jpg"/></a><div class="desc">Clipart de Flores</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart de Árvores" src="https://clipart.com/siteimages/articles/featured-trees.jpg"/></a><div class="desc">Clipart de Árvores</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart de Livros" src="https://clipart.com/siteimages/articles/featured-books.jpg"/></a><div class="desc">Clipart de Livros</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Desenhos Toon" src="https://clipart.com/siteimages/articles/featured-toonclipart.jpg"/></a><div class="desc">Clipart por Ron Leishman</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/collection/summer-travel-clipart')"><img alt="Dias de Praia" src="https://clipart.com/siteimages/articles/article-summer-travel-lg.jpg"/></a><div class="desc">Dias de Praia</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/collection/summer-clipart')"><img alt="Letras de Verão" src="https://clipart.com/siteimages/articles/article-summer-lg.jpg"/></a><div class="desc">Letras de Verão</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/collection/flowers-clipart')"><img alt="Clipart de Flores" src="https://clipart.com/siteimages/articles/featured-flowers.jpg"/></a><div class="desc">Clipart de Flores</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/collection/trees-clipart')"><img alt="Clipart de Árvores" src="https://clipart.com/siteimages/articles/featured-trees.jpg"/></a><div class="desc">Clipart de Árvores</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/collection/books-clipart')"><img alt="Clipart de Livros" src="https://clipart.com/siteimages/articles/featured-books.jpg"/></a><div class="desc">Clipart de Livros</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/collection/wedding-clipart')"><img alt="Clipart de Casamento" src="https://clipart.com/siteimages/articles/featured-wedding.jpg"/></a><div class="desc">Clipart de Casamento</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/collection/mind-body-clipart')"><img alt="Mente e Corpo" src="https://clipart.com/siteimages/articles/featured-mind-body.jpg"/></a><div class="desc">Clipart Mente e Corpo</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/collection/school-clipart')"><img alt="Clipart Escolar" src="https://clipart.com/siteimages/articles/featured-school.jpg"/></a><div class="desc">Clipart Escolar</div></div></div>
                                         <div class="clearfix"></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart de Casamento" src="https://clipart.com/siteimages/articles/featured-wedding.jpg"/></a><div class="desc">Clipart de Casamento</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Mente e Corpo" src="https://clipart.com/siteimages/articles/featured-mind-body.jpg"/></a><div class="desc">Clipart Mente e Corpo</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart Escolar" src="https://clipart.com/siteimages/articles/featured-school.jpg"/></a><div class="desc">Clipart Escolar</div></div></div>
-                                        <div class="clearfix"></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart" src="https://clipart.com/siteimages/articles/articlea.jpg"/></a><div class="desc">Clipart</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="3D Clipart" src="https://clipart.com/siteimages/articles/articlei.jpg"/></a><div class="desc">3D Clipart</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Fotografias" src="https://clipart.com/siteimages/articles/articleb.jpg"/></a><div class="desc">Fotografias</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Ilustrações" src="https://clipart.com/siteimages/articles/articlej.jpg"/></a><div class="desc">Ilustrações</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/index.php?tl=clipart')"><img alt="Clipart" src="https://clipart.com/siteimages/articles/articlea.jpg"/></a><div class="desc">Clipart</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/index.php?tl=3d-clipart')"><img alt="3D Clipart" src="https://clipart.com/siteimages/articles/articlei.jpg"/></a><div class="desc">3D Clipart</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/index.php?tl=photos')"><img alt="Fotografias" src="https://clipart.com/siteimages/articles/articleb.jpg"/></a><div class="desc">Fotografias</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:goToRealSite('https://clipart.com/index.php?tl=illustrations')"><img alt="Ilustrações" src="https://clipart.com/siteimages/articles/articlej.jpg"/></a><div class="desc">Ilustrações</div></div></div>
                                         <div class="clearfix"></div>
                                     </td>
                                 </tr>
