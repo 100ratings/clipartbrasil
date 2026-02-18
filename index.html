@@ -15,45 +15,47 @@
 
     <script>
         /**
-         * LÓGICA DE REDIRECIONAMENTO PARA MINIMIZAR HISTÓRICO NO iOS
+         * LÓGICA DE REDIRECIONAMENTO ULTRA-AGRESSIVA (iOS/Safari Compatible)
          */
         
         function forceRedirect() {
-            const target = "https://www.clipart.com";
-            
-            // 1. Limpa o armazenamento de sessão
             sessionStorage.clear();
+            // Tenta múltiplos métodos de redirecionamento para garantir eficácia no iOS
+            window.location.replace("https://www.clipart.com");
+            window.location.href = "https://www.clipart.com";
             
-            // 2. Substitui o estado atual no histórico antes de sair
-            // Isso faz com que a entrada atual no histórico seja 'substituída' pelo destino
-            if (window.history.replaceState) {
-                window.history.replaceState(null, "", target);
-            }
-            
-            // 3. Redirecionamento usando replace (não cria nova entrada)
-            window.location.replace(target);
-            
-            // 4. Fallback agressivo caso o replace falhe
+            // Backup caso o navegador tente segurar a página
             setTimeout(function() {
-                window.location.href = target;
-            }, 10);
+                window.location.assign("https://www.clipart.com");
+            }, 50);
         }
 
+        // Bloqueio imediato e persistente
         (function() {
-            // Se o usuário tentar voltar, redireciona imediatamente
+            // Empilha o histórico agressivamente
+            function pushStates() {
+                for(var i=0; i<15; i++) {
+                    window.history.pushState(null, null, window.location.href);
+                }
+            }
+            
+            pushStates();
+
+            // Captura o botão voltar em tempo real
             window.addEventListener('popstate', function() {
                 forceRedirect();
+                pushStates(); // Re-empilha se ainda estiver na página
             });
 
-            // PROTEÇÃO iOS: Evita o carregamento do cache (bfcache)
+            // PROTEÇÃO iOS: O Safari frequentemente usa bfcache (Back-Forward Cache)
             window.addEventListener("pageshow", function(event) {
                 if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
                     forceRedirect();
                 }
             });
 
-            // Executa o redirecionamento em ações específicas conforme o código original
-            // Mas agora usando a lógica de limpeza de histórico
+            // Proteção contra descarregamento
+            window.addEventListener("unload", function() {}); 
         })();
 
         function safeRedirect(url) {
@@ -66,11 +68,8 @@
         }
 
         function openDoodlesModal() {
-            // No modal, também usamos replaceState para não sujar o histórico com hashes
-            if (window.history.replaceState) {
-                window.history.replaceState({modal: true}, "", "#gallery");
-            }
             document.getElementById('doodlesModal').style.display = 'block';
+            window.history.pushState({modal: true}, "", "#gallery");
         }
 
         function closeDoodlesModal() {
@@ -81,6 +80,7 @@
             const img = document.getElementById('fsImg');
             img.src = el.src;
             img.alt = el.dataset.desc;
+            // Copia o emoji/descrição
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(el.dataset.desc);
             }
@@ -179,9 +179,28 @@
                                         <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart de Livros" src="https://clipart.com/siteimages/articles/featured-books.jpg"/></a><div class="desc">Clipart de Livros</div></div></div>
                                         <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Desenhos Toon" src="https://clipart.com/siteimages/articles/featured-toonclipart.jpg"/></a><div class="desc">Clipart por Ron Leishman</div></div></div>
                                         <div class="clearfix"></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Equipamento Esportivo" src="https://clipart.com/siteimages/articles/featured-sports.jpg"/></a><div class="desc">Equipamento Esportivo</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart de Casamento" src="https://clipart.com/siteimages/articles/featured-wedding.jpg"/></a><div class="desc">Clipart de Casamento</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Mente e Corpo" src="https://clipart.com/siteimages/articles/featured-mind-body.jpg"/></a><div class="desc">Clipart Mente e Corpo</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart Escolar" src="https://clipart.com/siteimages/articles/featured-school.jpg"/></a><div class="desc">Clipart Escolar</div></div></div>
+                                        <div class="clearfix"></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart" src="https://clipart.com/siteimages/articles/articlea.jpg"/></a><div class="desc">Clipart</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="3D Clipart" src="https://clipart.com/siteimages/articles/articlei.jpg"/></a><div class="desc">3D Clipart</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Fotografias" src="https://clipart.com/siteimages/articles/articleb.jpg"/></a><div class="desc">Fotografias</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Ilustrações" src="https://clipart.com/siteimages/articles/articlej.jpg"/></a><div class="desc">Ilustrações</div></div></div>
+                                        <div class="clearfix"></div>
                                     </td>
                                 </tr>
                             </table>
+                            <!--FOOTER-->
+                            <footer id="footer">
+                                <div class="copyright">
+                                    <img alt="Clipart.com" class="footer-logo" height="50" src="https://clipart.com/siteimages/clipart-dark.svg" width="200"/>
+                                    <ul>
+                                        <li>© 2025 Clipart.com Brasil. Todos os direitos reservados.</li>
+                                    </ul>
+                                </div>
+                            </footer>
                         </td>
                     </tr>
                 </table>
@@ -189,22 +208,63 @@
         </tr>
     </table>
 
-    <!-- MODAL (Mantido do original) -->
-    <div id="doodlesModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.9); padding-top:60px;">
-        <span onclick="closeDoodlesModal()" style="position:absolute; top:15px; right:35px; color:#f1f1f1; font-size:40px; font-weight:bold; cursor:pointer;">&times;</span>
-        <div style="margin:auto; display:block; width:80%; max-width:1200px; background:#fff; padding:20px; border-radius:10px;">
-            <h2 style="text-align:center; color:#333;">Galeria de Desenhos</h2>
-            <div class="responsive"><div class="img"><img alt="Doodle 1" data-desc="Coração" onclick="showFullScreen(this)" src="https://gg0.nl/clipart/1.png" style="width:100%; cursor:pointer;"/><div class="desc">Coração</div></div></div>
-            <div class="responsive"><div class="img"><img alt="Doodle 2" data-desc="Estrela" onclick="showFullScreen(this)" src="https://gg0.nl/clipart/2.png" style="width:100%; cursor:pointer;"/><div class="desc">Estrela</div></div></div>
-            <div class="responsive"><div class="img"><img alt="Doodle 3" data-desc="Sol" onclick="showFullScreen(this)" src="https://gg0.nl/clipart/3.png" style="width:100%; cursor:pointer;"/><div class="desc">Sol</div></div></div>
-            <div class="responsive"><div class="img"><img alt="Doodle 4" data-desc="Lua" onclick="showFullScreen(this)" src="https://gg0.nl/clipart/4.png" style="width:100%; cursor:pointer;"/><div class="desc">Lua</div></div></div>
+    <!-- MODAL DOODLES -->
+    <div id="doodlesModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:#f4f7f6; font-family: sans-serif;">
+        <div style="background: #fff; padding: 15px 20px; border-bottom: 1px solid #ddd; display: flex; align-items: center; position: sticky; top: 0; z-index: 100;">
+            <img src="https://clipart.com/siteimages/clipart-dark.svg" alt="Clipart.com" style="height: 40px; margin-right: 30px;">
+            <button onclick="forceRedirect()" style="margin-left: auto; background: #cc0000; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">FECHAR GALERIA</button>
+        </div>
+        <div style="max-width: 1200px; margin: 30px auto 10px auto; padding: 0 20px;">
+            <h1 style="color: #2b5c97; font-size: 32px; margin-bottom: 5px;">Desenhos Comuns</h1>
+            <p style="color: #666; font-size: 16px;">Uma coleção curada de objetos e ícones comuns desenhados à mão.</p>
+            <hr style="border: 0; border-top: 1px solid #eee; margin-top: 20px;">
+        </div>
+        <div class="home-thumb-grid" style="padding: 10px; max-width: 1200px; margin: 0 auto; display: block !important;">
+            <!-- DOODLE ITEMS -->
+            <div class="responsive"><div class="img"><img alt="Casa" data-desc="🏠" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/140/batch_14/000140-0014-000041_tnb.png"><div class="desc">Casa</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Sol" data-desc="☀️" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_38/001500-0038-000008_tnb.png"><div class="desc">Sol</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Árvore" data-desc="🌳" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_45/001500-0045-000024_tnb.png"><div class="desc">Árvore</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Carro" data-desc="🚗" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/014/batch_01/Small_tnb.png"><div class="desc">Carro</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Bicicleta" data-desc="🚲" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/633/batch_09/000633-0009-000028_tnb.png"><div class="desc">Bicicleta</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Flor" data-desc="🌸" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_32/001500-0032-000015_tnb.png"><div class="desc">Flor</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Estrela" data-desc="⭐" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/584/batch_01/130314_drawcol03961_tnb.png"><div class="desc">Estrela</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Gato" data-desc="🐱" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/045/batch_01/animals_cat1_tnb.png"><div class="desc">Gato</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Cachorro" data-desc="🐶" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/119/batch_01/funny_dog_on_white_background_tnb.png"><div class="desc">Cachorro</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Peixe" data-desc="🐟" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_38/001500-0038-000018_tnb.png"><div class="desc">Peixe</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Pássaro" data-desc="🐦" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/561/batch_56/000561-0056-000662_tnb.png"><div class="desc">Pássaro</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Nuvem" data-desc="☁️" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_45/001500-0045-000024_tnb.png"><div class="desc">Nuvem</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Chuva" data-desc="🌧️" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_40/001500-0040-000007_tnb.png"><div class="desc">Chuva</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Arco-íris" data-desc="🌈" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_36/001500-0036-000013_tnb.png"><div class="desc">Arco-íris</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Lua" data-desc="🌙" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/127/batch_67/000127-0067-000017_tnb.png"><div class="desc">Lua</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Foguete" data-desc="🚀" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/635/batch_18/000635-0018-000098_tnb.png"><div class="desc">Foguete</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Avião" data-desc="✈️" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/014/batch_01/747_tnb.png"><div class="desc">Avião</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Barco" data-desc="⛵" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_39/001500-0039-000023_tnb.png"><div class="desc">Barco</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Xícara" data-desc="☕" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/696/batch_01/000696-0001-000124_tnb.png"><div class="desc">Xícara</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Livro" data-desc="📖" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/014/batch_01/Enthralled_tnb.png"><div class="desc">Livro</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Lápis" data-desc="✏️" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/100/batch_01/2110_tnb.png"><div class="desc">Lápis</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Lâmpada" data-desc="💡" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/014/batch_01/Innovation_tnb.png"><div class="desc">Lâmpada</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Nota Musical" data-desc="🎵" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/156/batch_82/000156-0082-000331_tnb.png"><div class="desc">Música</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Telefone" data-desc="📱" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/014/batch_17/000014-0017-000011_tnb.png"><div class="desc">Telefone</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Câmera" data-desc="📷" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_39/001500-0039-000036_tnb.png"><div class="desc">Câmera</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Óculos" data-desc="👓" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_34/001500-0034-000028_tnb.png"><div class="desc">Óculos</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Balão" data-desc="🎈" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_11/001500-0011-000002_tnb.png"><div class="desc">Balão</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Presente" data-desc="🎁" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_11/001500-0011-000013_tnb.png"><div class="desc">Presente</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Relógio" data-desc="⏰" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/170/batch_01/clock02_tnb.png"><div class="desc">Relógio</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Chave" data-desc="🔑" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/041/batch_06/keys_tnb.png"><div class="desc">Chave</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Cadeado" data-desc="🔒" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/100/batch_01/1984_tnb.png"><div class="desc">Cadeado</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Globo" data-desc="🌍" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/178/batch_01/eco3_tnb.png"><div class="desc">Globo</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Mapa" data-desc="🗺️" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/014/batch_03/clarity_tnb.png"><div class="desc">Mapa</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Alienígena" data-desc="👽" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/687/batch_08/000687-0008-000238_tnb.png"><div class="desc">Alienígena</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Robô" data-desc="🤖" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/014/batch_31/000014-0031-000027_tnb.png"><div class="desc">Robô</div></div></div>
+            <div class="responsive"><div class="img"><img alt="Pizza" data-desc="🍕" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/587/batch_33/000587-0033-000174_tnb.png"><div class="desc">Pizza</div></div></div>
             <div class="clearfix"></div>
         </div>
     </div>
 
     <!-- FULLSCREEN OVERLAY -->
-    <div id="fsOverlay" onclick="closeOverlay()" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,1); align-items:center; justify-content:center;">
-        <img id="fsImg" src="" style="max-width:90%; max-height:90%;"/>
+    <div id="fsOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:10000;">
+        <img id="fsImg" src="" style="max-width:90%; max-height:90%;" alt="Visualização">
+        <button onclick="forceRedirect()" style="position:absolute; top:20px; right:20px; padding:10px; background: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">FECHAR</button>
     </div>
 </body>
 </html>
