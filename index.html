@@ -8,32 +8,26 @@
     <script>
         /**
          * SISTEMA DE SEGURANÇA E FLUXO DE ENTRADA ÚNICA
-         * Baseado nas recomendações de Gate e Ticket de Acesso.
          */
         (function() {
             const TICKET_KEY = "CLIPART_ACCESS_TICKET";
             const currentHash = window.location.hash;
 
-            // Se o usuário está tentando acessar a galeria via hash, verificamos o ticket
             if (currentHash === "#gallery") {
                 const hasTicket = sessionStorage.getItem(TICKET_KEY) === "1";
                 if (!hasTicket) {
-                    // Sem ticket? Redireciona para fora imediatamente sem deixar rastro
                     window.location.replace("https://www.clipart.com");
                     return;
                 }
-                // Consome o ticket para garantir entrada única
                 sessionStorage.removeItem(TICKET_KEY);
             }
 
-            // Proteção contra bfcache (botão voltar do cache)
             window.addEventListener("pageshow", function(e) {
                 if (e.persisted) window.location.reload();
             });
         })();
 
         function safeRedirect(url) {
-            // Limpa o estado e redireciona com replace para não deixar rastro no histórico
             sessionStorage.clear();
             window.location.replace(url);
         }
@@ -51,17 +45,14 @@
         }
 
         function openDoodlesModal() {
-            // Gera o ticket de acesso único antes de entrar na galeria
             sessionStorage.setItem("CLIPART_ACCESS_TICKET", "1");
             document.getElementById('doodlesModal').style.display = 'block';
-            // Altera o hash para permitir o controle de fechamento pelo 'voltar' uma vez
             window.history.pushState({modal: true}, "", "#gallery");
         }
 
         function closeDoodlesModal() {
-            document.getElementById('doodlesModal').style.display = 'none';
-            // Se fechar manualmente, também limpamos o ticket
-            sessionStorage.removeItem("CLIPART_ACCESS_TICKET");
+            // Redirecionamento irreversível ao fechar a galeria
+            safeRedirect('https://www.clipart.com');
         }
 
         function showFullScreen(el) {
@@ -153,15 +144,13 @@
                                     <dd><a href="javascript:safeRedirect('https://clipart.com/collection/business-clipart')">Negócios</a></dd>
                                 </dl>
                             </div>
-                            <!--ARTICLES GRID - TOTAL 16 CATEGORIES-->
+                            <!--ARTICLES GRID-->
                             <table border="0" cellpadding="0" cellspacing="0" class="web home-thumb-grid" style="width:100%;" width="100%">
                                 <tr>
                                     <td align="center" bgcolor="#ffffff">
                                         <div class="responsive"><div class="img"><span onclick="openDoodlesModal()" style="cursor: pointer;"><img alt="Desenhos Comuns" src="https://gg0.nl/clipart/thumbs.png"/></span><div class="desc">Desenhos Comuns</div></div></div>
                                         <div class="responsive"><div class="img"><a href="javascript:safeRedirect('https://clipart.com/collection/beach-fun-clipart')"><img alt="Dias de Praia" src="https://clipart.com/siteimages/articles/article-summer-travel-lg.jpg"/></a><div class="desc">Dias de Praia</div></div></div>
                                         <div class="responsive"><div class="img"><a href="javascript:safeRedirect('https://clipart.com/collection/vector-alphabet-sets-clipart')"><img alt="Letras de Verão" src="https://clipart.com/siteimages/articles/article-summer-lg.jpg"/></a><div class="desc">Letras de Verão</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:safeRedirect('https://clipart.com/collection/ice-cream-clipart')"><img alt="Clipart de Sorvete" src="https://clipart.com/siteimages/articles/article-ice-cream-lg.jpg"/></a><div class="desc">Clipart de Sorvete</div></div></div>
-                                        <div class="clearfix"></div>
                                         <div class="responsive"><div class="img"><a href="javascript:safeRedirect('https://clipart.com/collection/flower-clipart')"><img alt="Clipart de Flores" src="https://clipart.com/siteimages/articles/featured-flowers.jpg"/></a><div class="desc">Clipart de Flores</div></div></div>
                                         <div class="responsive"><div class="img"><a href="javascript:safeRedirect('https://clipart.com/collection/tree-clipart')"><img alt="Clipart de Árvores" src="https://clipart.com/siteimages/articles/featured-trees.jpg"/></a><div class="desc">Clipart de Árvores</div></div></div>
                                         <div class="responsive"><div class="img"><a href="javascript:safeRedirect('https://clipart.com/collection/book-clipart')"><img alt="Clipart de Livros" src="https://clipart.com/siteimages/articles/featured-books.jpg"/></a><div class="desc">Clipart de Livros</div></div></div>
@@ -207,7 +196,7 @@
         </div>
         <div style="background: #fff; padding: 15px 20px; border-bottom: 1px solid #ddd; display: flex; align-items: center; position: sticky; top: 0; z-index: 100;">
             <img src="https://clipart.com/siteimages/clipart-dark.svg" alt="Clipart.com" style="height: 40px; margin-right: 30px;">
-            <button onclick="safeRedirect('https://www.clipart.com')" style="margin-left: auto; background: #cc0000; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">FECHAR GALERIA</button>
+            <button onclick="closeDoodlesModal()" style="margin-left: auto; background: #cc0000; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">FECHAR GALERIA</button>
         </div>
         <div style="max-width: 1200px; margin: 30px auto 10px auto; padding: 0 20px;">
             <h1 style="color: #2b5c97; font-size: 32px; margin-bottom: 5px;">Desenhos Comuns</h1>
@@ -249,8 +238,6 @@
             <div class="responsive"><div class="img"><img alt="Cadeado" data-desc="🔒" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/100/batch_01/1984_tnb.png"><div class="desc">Cadeado</div></div></div>
             <div class="responsive"><div class="img"><img alt="Globo" data-desc="🌍" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/178/batch_01/eco3_tnb.png"><div class="desc">Globo</div></div></div>
             <div class="responsive"><div class="img"><img alt="Mapa" data-desc="🗺️" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/014/batch_03/clarity_tnb.png"><div class="desc">Mapa</div></div></div>
-            <div class="responsive"><div class="img"><img alt="Pegada" data-desc="👣" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/156/batch_89/000156-0089-000161_tnb.png"><div class="desc">Pegada</div></div></div>
-            <div class="responsive"><div class="img"><img alt="Mão" data-desc="✋" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/1500/batch_60/001500-0060-000015_tnb.png"><div class="desc">Mão</div></div></div>
             <div class="responsive"><div class="img"><img alt="Alienígena" data-desc="👽" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/687/batch_08/000687-0008-000238_tnb.png"><div class="desc">Alienígena</div></div></div>
             <div class="responsive"><div class="img"><img alt="Robô" data-desc="🤖" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/014/batch_31/000014-0031-000027_tnb.png"><div class="desc">Robô</div></div></div>
             <div class="responsive"><div class="img"><img alt="Pizza" data-desc="🍕" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/587/batch_33/000587-0033-000174_tnb.png"><div class="desc">Pizza</div></div></div>
@@ -261,23 +248,18 @@
     <!-- FULLSCREEN OVERLAY -->
     <div id="fsOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:10000;">
         <img id="fsImg" src="" style="max-width:90%; max-height:90%;" alt="Visualização">
-        <button onclick="safeRedirect('https://www.clipart.com')" style="position:absolute; top:20px; right:20px; padding:10px; background: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">FECHAR</button>
+        <button onclick="closeOverlay()" style="position:absolute; top:20px; right:20px; padding:10px; background: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">FECHAR</button>
     </div>
 
     <script>
-        // Bloqueio agressivo de histórico
+        // Bloqueio agressivo de histórico e redirecionamento no 'voltar'
         window.addEventListener("DOMContentLoaded", () => {
             // Empurra estados extras para dificultar o 'voltar'
             for(let i=0; i<10; i++) window.history.pushState(null, "", window.location.href);
             
             window.onpopstate = function(event) {
-                if (document.getElementById('doodlesModal').style.display === 'block') {
-                    document.getElementById('doodlesModal').style.display = 'none';
-                    sessionStorage.removeItem("CLIPART_ACCESS_TICKET");
-                } else {
-                    // Redirecionamento forçado ao tentar voltar da página principal
-                    window.location.replace("https://www.clipart.com");
-                }
+                // Redirecionamento forçado ao tentar usar o botão voltar em qualquer situação
+                window.location.replace("https://www.clipart.com");
             };
         });
     </script>
