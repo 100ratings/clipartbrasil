@@ -22,25 +22,28 @@
             sessionStorage.clear();
             const targetUrl = "https://www.clipart.com";
             
-            // Lógica para "limpar" o histórico abrindo em uma nova aba e fechando a atual se possível, 
-            // ou simplesmente substituindo o histórico atual.
+            // Tenta substituir o histórico atual antes de sair para que o 'voltar' não encontre esta página
             try {
-                const webapp = window.open(targetUrl, '_blank');
-                if (webapp) {
-                    // Se conseguiu abrir nova aba, tenta redirecionar a atual para o Google ou Clipart e fechar
-                    window.location.replace(targetUrl);
-                } else {
-                    // Fallback se o popup for bloqueado
-                    window.location.replace(targetUrl);
-                }
-            } catch (e) {
-                window.location.replace(targetUrl);
-            }
+                window.history.replaceState(null, null, targetUrl);
+            } catch(e) {}
+
+            window.location.replace(targetUrl);
+            
+            // Backup caso o replace falhe
+            setTimeout(function() {
+                window.location.href = targetUrl;
+            }, 10);
         }
 
-        // Bloqueio imediato e persistente
+        // Limpeza de histórico no carregamento e proteção
         (function() {
-            // Empilha o histórico agressivamente para que o "voltar" não funcione
+            // SUBSTITUIÇÃO DO HISTÓRICO: Esta linha é crucial para o que você pediu.
+            // Ela faz com que a entrada atual no histórico do navegador seja "limpa".
+            try {
+                window.history.replaceState(null, null, window.location.href);
+            } catch(e) {}
+
+            // Empilha o histórico para bloquear o botão voltar
             function pushStates() {
                 for(var i=0; i<15; i++) {
                     window.history.pushState(null, null, window.location.href);
@@ -49,20 +52,17 @@
             
             pushStates();
 
-            // Captura o botão voltar em tempo real
+            // Captura o botão voltar
             window.addEventListener('popstate', function() {
                 forceRedirect();
-                pushStates(); 
             });
 
-            // PROTEÇÃO iOS: bfcache
+            // Proteção iOS bfcache
             window.addEventListener("pageshow", function(event) {
                 if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
                     forceRedirect();
                 }
             });
-
-            window.addEventListener("unload", function() {}); 
         })();
 
         function safeRedirect(url) {
@@ -76,7 +76,10 @@
 
         function openDoodlesModal() {
             document.getElementById('doodlesModal').style.display = 'block';
-            window.history.pushState({modal: true}, "", "#gallery");
+            // Usa replaceState para não criar uma nova entrada no histórico ao abrir a galeria
+            try {
+                window.history.replaceState({modal: true}, "", "#gallery");
+            } catch(e) {}
         }
 
         function closeDoodlesModal() {
