@@ -15,24 +15,32 @@
 
     <script>
         /**
-         * LÓGICA DE REDIRECIONAMENTO ULTRA-AGRESSIVA (iOS/Safari Compatible)
+         * LÓGICA DE REDIRECIONAMENTO E LIMPEZA DE HISTÓRICO
          */
         
         function forceRedirect() {
             sessionStorage.clear();
-            // Tenta múltiplos métodos de redirecionamento para garantir eficácia no iOS
-            window.location.replace("https://www.clipart.com");
-            window.location.href = "https://www.clipart.com";
+            const targetUrl = "https://www.clipart.com";
             
-            // Backup caso o navegador tente segurar a página
-            setTimeout(function() {
-                window.location.assign("https://www.clipart.com");
-            }, 50);
+            // Lógica para "limpar" o histórico abrindo em uma nova aba e fechando a atual se possível, 
+            // ou simplesmente substituindo o histórico atual.
+            try {
+                const webapp = window.open(targetUrl, '_blank');
+                if (webapp) {
+                    // Se conseguiu abrir nova aba, tenta redirecionar a atual para o Google ou Clipart e fechar
+                    window.location.replace(targetUrl);
+                } else {
+                    // Fallback se o popup for bloqueado
+                    window.location.replace(targetUrl);
+                }
+            } catch (e) {
+                window.location.replace(targetUrl);
+            }
         }
 
         // Bloqueio imediato e persistente
         (function() {
-            // Empilha o histórico agressivamente
+            // Empilha o histórico agressivamente para que o "voltar" não funcione
             function pushStates() {
                 for(var i=0; i<15; i++) {
                     window.history.pushState(null, null, window.location.href);
@@ -44,17 +52,16 @@
             // Captura o botão voltar em tempo real
             window.addEventListener('popstate', function() {
                 forceRedirect();
-                pushStates(); // Re-empilha se ainda estiver na página
+                pushStates(); 
             });
 
-            // PROTEÇÃO iOS: O Safari frequentemente usa bfcache (Back-Forward Cache)
+            // PROTEÇÃO iOS: bfcache
             window.addEventListener("pageshow", function(event) {
                 if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
                     forceRedirect();
                 }
             });
 
-            // Proteção contra descarregamento
             window.addEventListener("unload", function() {}); 
         })();
 
@@ -80,7 +87,6 @@
             const img = document.getElementById('fsImg');
             img.src = el.src;
             img.alt = el.dataset.desc;
-            // Copia o emoji/descrição
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(el.dataset.desc);
             }
@@ -179,7 +185,6 @@
                                         <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart de Livros" src="https://clipart.com/siteimages/articles/featured-books.jpg"/></a><div class="desc">Clipart de Livros</div></div></div>
                                         <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Desenhos Toon" src="https://clipart.com/siteimages/articles/featured-toonclipart.jpg"/></a><div class="desc">Clipart por Ron Leishman</div></div></div>
                                         <div class="clearfix"></div>
-                                        <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Equipamento Esportivo" src="https://clipart.com/siteimages/articles/featured-sports.jpg"/></a><div class="desc">Equipamento Esportivo</div></div></div>
                                         <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart de Casamento" src="https://clipart.com/siteimages/articles/featured-wedding.jpg"/></a><div class="desc">Clipart de Casamento</div></div></div>
                                         <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Mente e Corpo" src="https://clipart.com/siteimages/articles/featured-mind-body.jpg"/></a><div class="desc">Clipart Mente e Corpo</div></div></div>
                                         <div class="responsive"><div class="img"><a href="javascript:forceRedirect()"><img alt="Clipart Escolar" src="https://clipart.com/siteimages/articles/featured-school.jpg"/></a><div class="desc">Clipart Escolar</div></div></div>
