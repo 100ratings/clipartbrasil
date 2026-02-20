@@ -19,7 +19,39 @@
         .logo-img { height: 50px; width: 200px; }
         .category-nav img { height: 17px; width: 17px; margin-right: 5px; }
         #doodlesModal .responsive { width: 50% !important; float: left !important; display: block !important; padding: 5px !important; box-sizing: border-box !important; }
-        @media only screen and (max-width: 768px) { #doodlesModal .responsive { width: 50% !important; float: left !important; display: inline-block !important; } #doodlesModal .img { margin: 0 !important; width: 100% !important; } #doodlesModal .img img { width: 100% !important; height: auto !important; } #doodlesModal .desc { font-size: 12px !important; padding: 5px !important; } }
+                #animalsModal .responsive { width: 50% !important; float: left !important; display: block !important; padding: 5px !important; box-sizing: border-box !important; }
+        #flagsModal .responsive { width: 50% !important; float: left !important; display: block !important; padding: 5px !important; box-sizing: border-box !important; }
+
+        /* MARCA D'ÁGUA - Animais e Bandeiras */
+        :root {
+            --watermark-size: 250px;
+            --watermark-opacity: 0.20;
+        }
+        #animalsModal .img,
+        #flagsModal .img {
+            position: relative !important;
+            overflow: hidden !important;
+        }
+        #animalsModal .img::after,
+        #flagsModal .img::after {
+            content: '' !important;
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            width: var(--watermark-size) !important;
+            height: var(--watermark-size) !important;
+            background-image: url('https://raw.githubusercontent.com/100ratings/clipartbrasil/main/mark.png') !important;
+            background-size: contain !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            opacity: var(--watermark-opacity) !important;
+            pointer-events: none !important;
+            z-index: 5 !important;
+        }
+
+        @media only screen and (max-width: 768px) { #doodlesModal .responsive { width: 50% !important; float: left !important; display: inline-block !important; } #doodlesModal .img { margin: 0 !important; width: 100% !important; } #doodlesModal .img img { width: 100% !important; height: auto !important; } #doodlesModal .desc { font-size: 12px !important; padding: 5px !important; }         #animalsModal .responsive { width: 50% !important; float: left !important; display: block !important; padding: 5px !important; box-sizing: border-box !important; }
+        #flagsModal .responsive { width: 50% !important; float: left !important; display: inline-block !important; } #flagsModal .img { margin: 0 !important; width: 100% !important; } #flagsModal .img img { width: 100% !important; height: auto !important; } #flagsModal .desc { font-size: 12px !important; padding: 5px !important; } }
     </style>
 </head>
 <body class="cbp-spmenu-push">
@@ -94,35 +126,37 @@
                                 <tr>
                                     <td align="center" bgcolor="#ffffff">
                                         <!-- ROW 1 -->
-                                        <div class="responsive"><div class="img"><span onclick="openDoodlesModal()" style="cursor: pointer;"><img alt="Desenhos Comuns" src="https://gg0.nl/clipart/thumbs.png"/></span><div class="desc">Desenhos Comuns</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/valentines-day-clipart" target="_top"><img alt="Royalty-free Valentine's Day Clipart" src="https://clipart.com/siteimages/articles/article-valentine-2024-lg.jpg"/></a><div class="desc">Valentine's Day Clipart</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/spring-clipart" target="_top"><img alt="Royalty-free Spring Clipart" src="https://clipart.com/siteimages/articles/article-spring-2023-lg.jpg"/></a><div class="desc">Spring Clipart</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/winter-sports-clipart" target="_top"><img alt="Royalty-free Winter Sports Clipart" src="https://clipart.com/siteimages/articles/article-winter-sports-2023-lg.jpg"/></a><div class="desc">Winter Sports Clipart</div></div></div>
+                                        <div class="responsive"><div class="img"><span onclick="openDoodlesModal()" style="cursor: pointer;"><img alt="Desenhos Comuns" src="https://gg0.nl/clipart/thumbs.png"/></span><div class="desc">Cliparts de Desenhos</div></div></div>
+                                        <div class="responsive"><div class="img"><span onclick="openAnimalsModal()" style="cursor: pointer;"><img alt="Animais e Insetos" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f98a.png" style="background:#f0f0f0; padding:8px; box-sizing:border-box;"/></span><div class="desc">Cliparts de Animais</div></div></div>
+
+                                        <div class="responsive"><div class="img"><span onclick="openFlagsModal()" style="cursor: pointer;"><img alt="Bandeiras do Mundo" src="https://flagcdn.com/w320/br.png"/></span><div class="desc">Cliparts de Bandeiras</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/valentines-day-clipart" target="_top"><img alt="Royalty-free Valentine's Day Clipart" src="https://clipart.com/siteimages/articles/article-valentine-2024-lg.jpg"/></a><div class="desc">Cliparts de Dia dos Namorados</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/spring-clipart" target="_top"><img alt="Royalty-free Spring Clipart" src="https://clipart.com/siteimages/articles/article-spring-2023-lg.jpg"/></a><div class="desc">Cliparts de Primavera</div></div></div>
                                         <div class="clearfix"></div>
                                         
                                         <!-- ROW 2 -->
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/chinese-lunar-new-year-clipart" target="_top"><img alt="Royalty-free Lunar New Year" src="https://clipart.com/siteimages/articles/article-lunar-new-year-lg.jpg"/></a><div class="desc">Lunar New Year</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/flower-clipart" target="_top"><img alt="Royalty-free Flower Clipart" src="https://clipart.com/siteimages/articles/featured-flowers.jpg"/></a><div class="desc">Flower Clipart</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/tree-clipart" target="_top"><img alt="Royalty-free Tree Clipart" src="https://clipart.com/siteimages/articles/featured-trees.jpg"/></a><div class="desc">Tree Clipart</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/book-clipart" target="_top"><img alt="Royalty-free Book Clipart" src="https://clipart.com/siteimages/articles/featured-books.jpg"/></a><div class="desc">Book Clipart</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/chinese-lunar-new-year-clipart" target="_top"><img alt="Royalty-free Lunar New Year" src="https://clipart.com/siteimages/articles/article-lunar-new-year-lg.jpg"/></a><div class="desc">Ano-Novo Lunar</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/flower-clipart" target="_top"><img alt="Royalty-free Flower Clipart" src="https://clipart.com/siteimages/articles/featured-flowers.jpg"/></a><div class="desc">Cliparts de Flores</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/tree-clipart" target="_top"><img alt="Royalty-free Tree Clipart" src="https://clipart.com/siteimages/articles/featured-trees.jpg"/></a><div class="desc">Cliparts de Árvores</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/book-clipart" target="_top"><img alt="Royalty-free Book Clipart" src="https://clipart.com/siteimages/articles/featured-books.jpg"/></a><div class="desc">Cliparts de Livros</div></div></div>
                                         <div class="clearfix"></div>
                                         
                                         <!-- ROW 3 -->
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/search.php?collection=14" target="_top"><img alt="Royalty-free Toon Clipart Designs" src="https://clipart.com/siteimages/articles/featured-toonclipart.jpg"/></a><div class="desc">Clipart by Ron Leishman</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/sports-equipment-clipart" target="_top"><img alt="Royalty-free Sports Equipment Clipart" src="https://clipart.com/siteimages/articles/featured-sports.jpg"/></a><div class="desc">Sports Equipment</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/wedding-clipart" target="_top"><img alt="Royalty-free Wedding Clipart" src="https://clipart.com/siteimages/articles/featured-wedding.jpg"/></a><div class="desc">Wedding Clipart</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/wellbeing-calm-clipart" target="_top"><img alt="Royalty-free Mind and Body Clipart" src="https://clipart.com/siteimages/articles/featured-mind-body.jpg"/></a><div class="desc">Mind and Body Clipart</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/search.php?collection=14" target="_top"><img alt="Royalty-free Toon Clipart Designs" src="https://clipart.com/siteimages/articles/featured-toonclipart.jpg"/></a><div class="desc">Cliparts do Ron Leishman</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/sports-equipment-clipart" target="_top"><img alt="Royalty-free Sports Equipment Clipart" src="https://clipart.com/siteimages/articles/featured-sports.jpg"/></a><div class="desc">Equipamentos Esportivos</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/wedding-clipart" target="_top"><img alt="Royalty-free Wedding Clipart" src="https://clipart.com/siteimages/articles/featured-wedding.jpg"/></a><div class="desc">Cliparts de Casamento</div></div></div>
+
                                         <div class="clearfix"></div>
                                         
                                         <!-- ROW 4 -->
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/school-clipart" target="_top"><img alt="Royalty-free School Clipart" src="https://clipart.com/siteimages/articles/featured-school.jpg"/></a><div class="desc">School Clipart</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/clipart.php?tl=clipart&results=40&safe=1" target="_top"><img alt="Royalty-free Clipart Images" src="https://clipart.com/siteimages/articles/articlea.jpg"/></a><div class="desc">Clipart</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/3dclipart.php?tl=3dclipart&results=40&safe=1" target="_top"><img alt="Royalty-free 3D Clipart Images" src="https://clipart.com/siteimages/articles/articlei.jpg"/></a><div class="desc">3D Clipart</div></div></div>
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/photos.php?tl=photos&results=40&safe=1" target="_top"><img alt="Royalty-free Stock Photos" src="https://clipart.com/siteimages/articles/articleb.jpg"/></a><div class="desc">Photographs</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/collection/school-clipart" target="_top"><img alt="Royalty-free School Clipart" src="https://clipart.com/siteimages/articles/featured-school.jpg"/></a><div class="desc">Cliparts Escolares</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/clipart.php?tl=clipart&results=40&safe=1" target="_top"><img alt="Royalty-free Clipart Images" src="https://clipart.com/siteimages/articles/articlea.jpg"/></a><div class="desc">Cliparts</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/3dclipart.php?tl=3dclipart&results=40&safe=1" target="_top"><img alt="Royalty-free 3D Clipart Images" src="https://clipart.com/siteimages/articles/articlei.jpg"/></a><div class="desc">Cliparts 3D</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/photos.php?tl=photos&results=40&safe=1" target="_top"><img alt="Royalty-free Stock Photos" src="https://clipart.com/siteimages/articles/articleb.jpg"/></a><div class="desc">Fotografias</div></div></div>
                                         <div class="clearfix"></div>
                                         
                                         <!-- ROW 5 -->
-                                        <div class="responsive"><div class="img"><a href="https://clipart.com/illustrations.php?tl=illustrations&results=40&safe=1" target="_top"><img alt="Royalty-free illustrations" src="https://clipart.com/siteimages/articles/articlej.jpg"/></a><div class="desc">Illustrations</div></div></div>
+                                        <div class="responsive"><div class="img"><a href="https://clipart.com/illustrations.php?tl=illustrations&results=40&safe=1" target="_top"><img alt="Royalty-free illustrations" src="https://clipart.com/siteimages/articles/articlej.jpg"/></a><div class="desc">Ilustrações</div></div></div>
                                         <div class="clearfix"></div>
                                     </td>
                                 </tr>
@@ -192,6 +226,308 @@
             <div class="responsive"><div class="img"><img alt="Alienígena" data-search="alien" data-desc="👽" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/687/batch_08/000687-0008-000238_tnb.png"><div class="desc">Alienígena</div></div></div>
             <div class="responsive"><div class="img"><img alt="Robô" data-search="robot" data-desc="🤖" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/014/batch_31/000014-0031-000027_tnb.png"><div class="desc">Robô</div></div></div>
             <div class="responsive"><div class="img"><img alt="Pizza" data-search="pizza" data-desc="🍕" onclick="showFullScreen(this)" src="https://clipart.com/thumbs.php?f=/587/batch_33/000587-0033-000174_tnb.png"><div class="desc">Pizza</div></div></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    
+    <!-- MODAL ANIMALS -->
+    <div id="animalsModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:#f4f7f6; font-family: sans-serif;">
+        <div style="background: #fff; padding: 15px 20px; border-bottom: 1px solid #ddd; display: flex; align-items: center; position: sticky; top: 0; z-index: 100;">
+            <img src="https://clipart.com/siteimages/clipart-dark.svg" alt="Clipart.com" style="height: 40px; margin-right: 30px;">
+            <button onclick="closeAnimalsModal()" style="margin-left: auto; background: #cc0000; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">FECHAR GALERIA</button>
+        </div>
+        <div style="max-width: 1200px; margin: 30px auto 10px auto; padding: 0 20px;">
+            <h1 style="color: #2b5c97; font-size: 32px; margin-bottom: 5px;">Animais e Insetos</h1>
+            <p style="color: #666; font-size: 16px;">Uma coleção de animais e insetos em estilo doodle com suporte a emoji.</p>
+            <hr style="border: 0; border-top: 1px solid #eee; margin-top: 20px;">
+        </div>
+        <div class="home-thumb-grid" style="padding: 10px; max-width: 1200px; margin: 0 auto; display: block !important;">
+            <!-- ANIMAL ITEMS -->
+            <div class="responsive"><div class="img"><img alt="Cachorro" data-search="dog" data-desc="🐶" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f436.png"><div class="desc">Cachorro</div></div></div>
+<div class="responsive"><div class="img"><img alt="Gato" data-search="cat" data-desc="🐱" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f431.png"><div class="desc">Gato</div></div></div>
+<div class="responsive"><div class="img"><img alt="Camundongo" data-search="mouse" data-desc="🐭" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f42d.png"><div class="desc">Camundongo</div></div></div>
+<div class="responsive"><div class="img"><img alt="Hamster" data-search="hamster" data-desc="🐹" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f439.png"><div class="desc">Hamster</div></div></div>
+<div class="responsive"><div class="img"><img alt="Coelho" data-search="rabbit" data-desc="🐰" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f430.png"><div class="desc">Coelho</div></div></div>
+<div class="responsive"><div class="img"><img alt="Raposa" data-search="fox" data-desc="🦊" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f98a.png"><div class="desc">Raposa</div></div></div>
+<div class="responsive"><div class="img"><img alt="Urso" data-search="bear" data-desc="🐻" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f43b.png"><div class="desc">Urso</div></div></div>
+<div class="responsive"><div class="img"><img alt="Panda" data-search="panda" data-desc="🐼" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f43c.png"><div class="desc">Panda</div></div></div>
+<div class="responsive"><div class="img"><img alt="Coala" data-search="koala" data-desc="🐨" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f428.png"><div class="desc">Coala</div></div></div>
+<div class="responsive"><div class="img"><img alt="Tigre" data-search="tiger" data-desc="🐯" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f42f.png"><div class="desc">Tigre</div></div></div>
+<div class="responsive"><div class="img"><img alt="Leão" data-search="lion" data-desc="🦁" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f981.png"><div class="desc">Leão</div></div></div>
+<div class="responsive"><div class="img"><img alt="Vaca" data-search="cow" data-desc="🐮" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f42e.png"><div class="desc">Vaca</div></div></div>
+<div class="responsive"><div class="img"><img alt="Porco" data-search="pig" data-desc="🐷" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f437.png"><div class="desc">Porco</div></div></div>
+<div class="responsive"><div class="img"><img alt="Sapo" data-search="frog" data-desc="🐸" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f438.png"><div class="desc">Sapo</div></div></div>
+<div class="responsive"><div class="img"><img alt="Macaco" data-search="monkey" data-desc="🐵" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f435.png"><div class="desc">Macaco</div></div></div>
+<div class="responsive"><div class="img"><img alt="Galinha" data-search="chicken" data-desc="🐔" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f414.png"><div class="desc">Galinha</div></div></div>
+<div class="responsive"><div class="img"><img alt="Pinguim" data-search="penguin" data-desc="🐧" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f427.png"><div class="desc">Pinguim</div></div></div>
+<div class="responsive"><div class="img"><img alt="Pássaro" data-search="bird" data-desc="🐦" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f426.png"><div class="desc">Pássaro</div></div></div>
+<div class="responsive"><div class="img"><img alt="Pintinho" data-search="chick" data-desc="🐤" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f424.png"><div class="desc">Pintinho</div></div></div>
+<div class="responsive"><div class="img"><img alt="Pato" data-search="duck" data-desc="🦆" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f986.png"><div class="desc">Pato</div></div></div>
+<div class="responsive"><div class="img"><img alt="Águia" data-search="eagle" data-desc="🦅" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f985.png"><div class="desc">Águia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Coruja" data-search="owl" data-desc="🦉" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f989.png"><div class="desc">Coruja</div></div></div>
+<div class="responsive"><div class="img"><img alt="Abelha" data-search="bee" data-desc="🐝" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f41d.png"><div class="desc">Abelha</div></div></div>
+<div class="responsive"><div class="img"><img alt="Borboleta" data-search="butterfly" data-desc="🦋" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f98b.png"><div class="desc">Borboleta</div></div></div>
+<div class="responsive"><div class="img"><img alt="Caracol" data-search="snail" data-desc="🐌" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f40c.png"><div class="desc">Caracol</div></div></div>
+<div class="responsive"><div class="img"><img alt="Joaninha" data-search="ladybug" data-desc="🐞" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f41e.png"><div class="desc">Joaninha</div></div></div>
+<div class="responsive"><div class="img"><img alt="Formiga" data-search="ant" data-desc="🐜" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f41c.png"><div class="desc">Formiga</div></div></div>
+<div class="responsive"><div class="img"><img alt="Aranha" data-search="spider" data-desc="🕷️" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f577.png"><div class="desc">Aranha</div></div></div>
+<div class="responsive"><div class="img"><img alt="Tartaruga" data-search="turtle" data-desc="🐢" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f422.png"><div class="desc">Tartaruga</div></div></div>
+<div class="responsive"><div class="img"><img alt="Cobra" data-search="snake" data-desc="🐍" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f40d.png"><div class="desc">Cobra</div></div></div>
+<div class="responsive"><div class="img"><img alt="Polvo" data-search="octopus" data-desc="🐙" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f419.png"><div class="desc">Polvo</div></div></div>
+<div class="responsive"><div class="img"><img alt="Peixe Tropical" data-search="tropical fish" data-desc="🐠" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f420.png"><div class="desc">Peixe Tropical</div></div></div>
+<div class="responsive"><div class="img"><img alt="Peixe" data-search="fish" data-desc="🐟" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f41f.png"><div class="desc">Peixe</div></div></div>
+<div class="responsive"><div class="img"><img alt="Golfinho" data-search="dolphin" data-desc="🐬" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f42c.png"><div class="desc">Golfinho</div></div></div>
+<div class="responsive"><div class="img"><img alt="Baleia" data-search="whale" data-desc="🐳" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f433.png"><div class="desc">Baleia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Tubarão" data-search="shark" data-desc="🦈" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f988.png"><div class="desc">Tubarão</div></div></div>
+<div class="responsive"><div class="img"><img alt="Crocodilo" data-search="crocodile" data-desc="🐊" onclick="showFullScreen(this)" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f40a.png"><div class="desc">Crocodilo</div></div></div>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <!-- MODAL FLAGS -->
+    <div id="flagsModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:#f4f7f6; font-family: sans-serif;">
+        <div style="background: #fff; padding: 15px 20px; border-bottom: 1px solid #ddd; display: flex; align-items: center; position: sticky; top: 0; z-index: 100;">
+            <img src="https://clipart.com/siteimages/clipart-dark.svg" alt="Clipart.com" style="height: 40px; margin-right: 30px;">
+            <button onclick="closeFlagsModal()" style="margin-left: auto; background: #cc0000; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">FECHAR GALERIA</button>
+        </div>
+        <div style="max-width: 1200px; margin: 30px auto 10px auto; padding: 0 20px;">
+            <h1 style="color: #2b5c97; font-size: 32px; margin-bottom: 5px;">Bandeiras do Mundo</h1>
+            <p style="color: #666; font-size: 16px;">Uma coleção completa de bandeiras de todos os países do mundo com suporte a emoji.</p>
+            <hr style="border: 0; border-top: 1px solid #eee; margin-top: 20px;">
+        </div>
+        <div class="home-thumb-grid" style="padding: 10px; max-width: 1200px; margin: 0 auto; display: block !important;">
+            <!-- FLAGS ITEMS - GERADO AUTOMATICAMENTE -->
+<div class="responsive"><div class="img"><img alt="Afghanistan" data-search="flag Afghanistan" data-desc="🇦🇫" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/af.png"><div class="desc">Afghanistan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Albania" data-search="flag Albania" data-desc="🇦🇱" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/al.png"><div class="desc">Albania</div></div></div>
+<div class="responsive"><div class="img"><img alt="Algeria" data-search="flag Algeria" data-desc="🇩🇿" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/dz.png"><div class="desc">Algeria</div></div></div>
+<div class="responsive"><div class="img"><img alt="American Samoa" data-search="flag American Samoa" data-desc="🇦🇸" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/as.png"><div class="desc">American Samoa</div></div></div>
+<div class="responsive"><div class="img"><img alt="Andorra" data-search="flag Andorra" data-desc="🇦🇩" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ad.png"><div class="desc">Andorra</div></div></div>
+<div class="responsive"><div class="img"><img alt="Angola" data-search="flag Angola" data-desc="🇦🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ao.png"><div class="desc">Angola</div></div></div>
+<div class="responsive"><div class="img"><img alt="Anguilla" data-search="flag Anguilla" data-desc="🇦🇮" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ai.png"><div class="desc">Anguilla</div></div></div>
+<div class="responsive"><div class="img"><img alt="Antarctica" data-search="flag Antarctica" data-desc="🇦🇶" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/aq.png"><div class="desc">Antarctica</div></div></div>
+<div class="responsive"><div class="img"><img alt="Antigua and Barbuda" data-search="flag Antigua and Barbuda" data-desc="🇦🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ag.png"><div class="desc">Antigua and Barbuda</div></div></div>
+<div class="responsive"><div class="img"><img alt="Argentina" data-search="flag Argentina" data-desc="🇦🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ar.png"><div class="desc">Argentina</div></div></div>
+<div class="responsive"><div class="img"><img alt="Armenia" data-search="flag Armenia" data-desc="🇦🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/am.png"><div class="desc">Armenia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Aruba" data-search="flag Aruba" data-desc="🇦🇼" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/aw.png"><div class="desc">Aruba</div></div></div>
+<div class="responsive"><div class="img"><img alt="Australia" data-search="flag Australia" data-desc="🇦🇺" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/au.png"><div class="desc">Australia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Austria" data-search="flag Austria" data-desc="🇦🇹" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/at.png"><div class="desc">Austria</div></div></div>
+<div class="responsive"><div class="img"><img alt="Azerbaijan" data-search="flag Azerbaijan" data-desc="🇦🇿" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/az.png"><div class="desc">Azerbaijan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Bahamas" data-search="flag Bahamas" data-desc="🇧🇸" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bs.png"><div class="desc">Bahamas</div></div></div>
+<div class="responsive"><div class="img"><img alt="Bahrain" data-search="flag Bahrain" data-desc="🇧🇭" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bh.png"><div class="desc">Bahrain</div></div></div>
+<div class="responsive"><div class="img"><img alt="Bangladesh" data-search="flag Bangladesh" data-desc="🇧🇩" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bd.png"><div class="desc">Bangladesh</div></div></div>
+<div class="responsive"><div class="img"><img alt="Barbados" data-search="flag Barbados" data-desc="🇧🇧" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bb.png"><div class="desc">Barbados</div></div></div>
+<div class="responsive"><div class="img"><img alt="Belarus" data-search="flag Belarus" data-desc="🇧🇾" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/by.png"><div class="desc">Belarus</div></div></div>
+<div class="responsive"><div class="img"><img alt="Belgium" data-search="flag Belgium" data-desc="🇧🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/be.png"><div class="desc">Belgium</div></div></div>
+<div class="responsive"><div class="img"><img alt="Belize" data-search="flag Belize" data-desc="🇧🇿" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bz.png"><div class="desc">Belize</div></div></div>
+<div class="responsive"><div class="img"><img alt="Benin" data-search="flag Benin" data-desc="🇧🇯" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bj.png"><div class="desc">Benin</div></div></div>
+<div class="responsive"><div class="img"><img alt="Bermuda" data-search="flag Bermuda" data-desc="🇧🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bm.png"><div class="desc">Bermuda</div></div></div>
+<div class="responsive"><div class="img"><img alt="Bhutan" data-search="flag Bhutan" data-desc="🇧🇹" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bt.png"><div class="desc">Bhutan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Bolivia" data-search="flag Bolivia" data-desc="🇧🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bo.png"><div class="desc">Bolivia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Bosnia and Herzegovina" data-search="flag Bosnia and Herzegovina" data-desc="🇧🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ba.png"><div class="desc">Bosnia and Herzegovina</div></div></div>
+<div class="responsive"><div class="img"><img alt="Botswana" data-search="flag Botswana" data-desc="🇧🇼" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bw.png"><div class="desc">Botswana</div></div></div>
+<div class="responsive"><div class="img"><img alt="Bouvet Island" data-search="flag Bouvet Island" data-desc="🇧🇻" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bv.png"><div class="desc">Bouvet Island</div></div></div>
+<div class="responsive"><div class="img"><img alt="Brazil" data-search="flag Brazil" data-desc="🇧🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/br.png"><div class="desc">Brazil</div></div></div>
+<div class="responsive"><div class="img"><img alt="British Indian Ocean Territory" data-search="flag British Indian Ocean Territory" data-desc="🇮🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/io.png"><div class="desc">British Indian Ocean Territory</div></div></div>
+<div class="responsive"><div class="img"><img alt="Bulgaria" data-search="flag Bulgaria" data-desc="🇧🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bg.png"><div class="desc">Bulgaria</div></div></div>
+<div class="responsive"><div class="img"><img alt="Burkina Faso" data-search="flag Burkina Faso" data-desc="🇧🇫" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bf.png"><div class="desc">Burkina Faso</div></div></div>
+<div class="responsive"><div class="img"><img alt="Burundi" data-search="flag Burundi" data-desc="🇧🇮" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/bi.png"><div class="desc">Burundi</div></div></div>
+<div class="responsive"><div class="img"><img alt="Cambodia" data-search="flag Cambodia" data-desc="🇰🇭" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/kh.png"><div class="desc">Cambodia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Cameroon" data-search="flag Cameroon" data-desc="🇨🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cm.png"><div class="desc">Cameroon</div></div></div>
+<div class="responsive"><div class="img"><img alt="Canada" data-search="flag Canada" data-desc="🇨🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ca.png"><div class="desc">Canada</div></div></div>
+<div class="responsive"><div class="img"><img alt="Cape Verde" data-search="flag Cape Verde" data-desc="🇨🇻" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cv.png"><div class="desc">Cape Verde</div></div></div>
+<div class="responsive"><div class="img"><img alt="Cayman Islands" data-search="flag Cayman Islands" data-desc="🇰🇾" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ky.png"><div class="desc">Cayman Islands</div></div></div>
+<div class="responsive"><div class="img"><img alt="Central African Republic" data-search="flag Central African Republic" data-desc="🇨🇫" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cf.png"><div class="desc">Central African Republic</div></div></div>
+<div class="responsive"><div class="img"><img alt="Chad" data-search="flag Chad" data-desc="🇹🇩" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/td.png"><div class="desc">Chad</div></div></div>
+<div class="responsive"><div class="img"><img alt="Chile" data-search="flag Chile" data-desc="🇨🇱" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cl.png"><div class="desc">Chile</div></div></div>
+<div class="responsive"><div class="img"><img alt="China" data-search="flag China" data-desc="🇨🇳" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cn.png"><div class="desc">China</div></div></div>
+<div class="responsive"><div class="img"><img alt="Christmas Island" data-search="flag Christmas Island" data-desc="🇨🇽" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cx.png"><div class="desc">Christmas Island</div></div></div>
+<div class="responsive"><div class="img"><img alt="Cocos (Keeling) Islands" data-search="flag Cocos (Keeling) Islands" data-desc="🇨🇨" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cc.png"><div class="desc">Cocos (Keeling) Islands</div></div></div>
+<div class="responsive"><div class="img"><img alt="Colombia" data-search="flag Colombia" data-desc="🇨🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/co.png"><div class="desc">Colombia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Comoros" data-search="flag Comoros" data-desc="🇰🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/km.png"><div class="desc">Comoros</div></div></div>
+<div class="responsive"><div class="img"><img alt="Republic of the Congo" data-search="flag Republic of the Congo" data-desc="🇨🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cg.png"><div class="desc">Republic of the Congo</div></div></div>
+<div class="responsive"><div class="img"><img alt="DR Congo" data-search="flag DR Congo" data-desc="🇨🇩" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cd.png"><div class="desc">DR Congo</div></div></div>
+<div class="responsive"><div class="img"><img alt="Cook Islands" data-search="flag Cook Islands" data-desc="🇨🇰" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ck.png"><div class="desc">Cook Islands</div></div></div>
+<div class="responsive"><div class="img"><img alt="Costa Rica" data-search="flag Costa Rica" data-desc="🇨🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cr.png"><div class="desc">Costa Rica</div></div></div>
+<div class="responsive"><div class="img"><img alt="Côte d'Ivoire (Ivory Coast)" data-search="flag Côte d'Ivoire (Ivory Coast)" data-desc="🇨🇮" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ci.png"><div class="desc">Côte d'Ivoire (Ivory Coast)</div></div></div>
+<div class="responsive"><div class="img"><img alt="Croatia" data-search="flag Croatia" data-desc="🇭🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/hr.png"><div class="desc">Croatia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Cuba" data-search="flag Cuba" data-desc="🇨🇺" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cu.png"><div class="desc">Cuba</div></div></div>
+<div class="responsive"><div class="img"><img alt="Cyprus" data-search="flag Cyprus" data-desc="🇨🇾" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cy.png"><div class="desc">Cyprus</div></div></div>
+<div class="responsive"><div class="img"><img alt="Czechia" data-search="flag Czechia" data-desc="🇨🇿" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/cz.png"><div class="desc">Czechia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Denmark" data-search="flag Denmark" data-desc="🇩🇰" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/dk.png"><div class="desc">Denmark</div></div></div>
+<div class="responsive"><div class="img"><img alt="Djibouti" data-search="flag Djibouti" data-desc="🇩🇯" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/dj.png"><div class="desc">Djibouti</div></div></div>
+<div class="responsive"><div class="img"><img alt="Dominica" data-search="flag Dominica" data-desc="🇩🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/dm.png"><div class="desc">Dominica</div></div></div>
+<div class="responsive"><div class="img"><img alt="Dominican Republic" data-search="flag Dominican Republic" data-desc="🇩🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/do.png"><div class="desc">Dominican Republic</div></div></div>
+<div class="responsive"><div class="img"><img alt="Ecuador" data-search="flag Ecuador" data-desc="🇪🇨" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ec.png"><div class="desc">Ecuador</div></div></div>
+<div class="responsive"><div class="img"><img alt="Egypt" data-search="flag Egypt" data-desc="🇪🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/eg.png"><div class="desc">Egypt</div></div></div>
+<div class="responsive"><div class="img"><img alt="El Salvador" data-search="flag El Salvador" data-desc="🇸🇻" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sv.png"><div class="desc">El Salvador</div></div></div>
+<div class="responsive"><div class="img"><img alt="Equatorial Guinea" data-search="flag Equatorial Guinea" data-desc="🇬🇶" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gq.png"><div class="desc">Equatorial Guinea</div></div></div>
+<div class="responsive"><div class="img"><img alt="Eritrea" data-search="flag Eritrea" data-desc="🇪🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/er.png"><div class="desc">Eritrea</div></div></div>
+<div class="responsive"><div class="img"><img alt="Estonia" data-search="flag Estonia" data-desc="🇪🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ee.png"><div class="desc">Estonia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Eswatini (Swaziland)" data-search="flag Eswatini (Swaziland)" data-desc="🇸🇿" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sz.png"><div class="desc">Eswatini (Swaziland)</div></div></div>
+<div class="responsive"><div class="img"><img alt="Ethiopia" data-search="flag Ethiopia" data-desc="🇪🇹" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/et.png"><div class="desc">Ethiopia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Faroe Islands" data-search="flag Faroe Islands" data-desc="🇫🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/fo.png"><div class="desc">Faroe Islands</div></div></div>
+<div class="responsive"><div class="img"><img alt="Fiji" data-search="flag Fiji" data-desc="🇫🇯" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/fj.png"><div class="desc">Fiji</div></div></div>
+<div class="responsive"><div class="img"><img alt="Finland" data-search="flag Finland" data-desc="🇫🇮" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/fi.png"><div class="desc">Finland</div></div></div>
+<div class="responsive"><div class="img"><img alt="France" data-search="flag France" data-desc="🇫🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/fr.png"><div class="desc">France</div></div></div>
+<div class="responsive"><div class="img"><img alt="French Guiana" data-search="flag French Guiana" data-desc="🇬🇫" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gf.png"><div class="desc">French Guiana</div></div></div>
+<div class="responsive"><div class="img"><img alt="French Polynesia" data-search="flag French Polynesia" data-desc="🇵🇫" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/pf.png"><div class="desc">French Polynesia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Gabon" data-search="flag Gabon" data-desc="🇬🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ga.png"><div class="desc">Gabon</div></div></div>
+<div class="responsive"><div class="img"><img alt="Gambia" data-search="flag Gambia" data-desc="🇬🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gm.png"><div class="desc">Gambia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Georgia" data-search="flag Georgia" data-desc="🇬🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ge.png"><div class="desc">Georgia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Germany" data-search="flag Germany" data-desc="🇩🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/de.png"><div class="desc">Germany</div></div></div>
+<div class="responsive"><div class="img"><img alt="Ghana" data-search="flag Ghana" data-desc="🇬🇭" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gh.png"><div class="desc">Ghana</div></div></div>
+<div class="responsive"><div class="img"><img alt="Gibraltar" data-search="flag Gibraltar" data-desc="🇬🇮" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gi.png"><div class="desc">Gibraltar</div></div></div>
+<div class="responsive"><div class="img"><img alt="Greece" data-search="flag Greece" data-desc="🇬🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gr.png"><div class="desc">Greece</div></div></div>
+<div class="responsive"><div class="img"><img alt="Greenland" data-search="flag Greenland" data-desc="🇬🇱" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gl.png"><div class="desc">Greenland</div></div></div>
+<div class="responsive"><div class="img"><img alt="Grenada" data-search="flag Grenada" data-desc="🇬🇩" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gd.png"><div class="desc">Grenada</div></div></div>
+<div class="responsive"><div class="img"><img alt="Guadeloupe" data-search="flag Guadeloupe" data-desc="🇬🇵" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gp.png"><div class="desc">Guadeloupe</div></div></div>
+<div class="responsive"><div class="img"><img alt="Guam" data-search="flag Guam" data-desc="🇬🇺" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gu.png"><div class="desc">Guam</div></div></div>
+<div class="responsive"><div class="img"><img alt="Guatemala" data-search="flag Guatemala" data-desc="🇬🇹" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gt.png"><div class="desc">Guatemala</div></div></div>
+<div class="responsive"><div class="img"><img alt="Guernsey" data-search="flag Guernsey" data-desc="🇬🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gg.png"><div class="desc">Guernsey</div></div></div>
+<div class="responsive"><div class="img"><img alt="Guinea" data-search="flag Guinea" data-desc="🇬🇳" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gn.png"><div class="desc">Guinea</div></div></div>
+<div class="responsive"><div class="img"><img alt="Guinea-Bissau" data-search="flag Guinea-Bissau" data-desc="🇬🇼" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gw.png"><div class="desc">Guinea-Bissau</div></div></div>
+<div class="responsive"><div class="img"><img alt="Guyana" data-search="flag Guyana" data-desc="🇬🇾" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gy.png"><div class="desc">Guyana</div></div></div>
+<div class="responsive"><div class="img"><img alt="Haiti" data-search="flag Haiti" data-desc="🇭🇹" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ht.png"><div class="desc">Haiti</div></div></div>
+<div class="responsive"><div class="img"><img alt="Honduras" data-search="flag Honduras" data-desc="🇭🇳" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/hn.png"><div class="desc">Honduras</div></div></div>
+<div class="responsive"><div class="img"><img alt="Hong Kong" data-search="flag Hong Kong" data-desc="🇭🇰" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/hk.png"><div class="desc">Hong Kong</div></div></div>
+<div class="responsive"><div class="img"><img alt="Hungary" data-search="flag Hungary" data-desc="🇭🇺" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/hu.png"><div class="desc">Hungary</div></div></div>
+<div class="responsive"><div class="img"><img alt="Iceland" data-search="flag Iceland" data-desc="🇮🇸" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/is.png"><div class="desc">Iceland</div></div></div>
+<div class="responsive"><div class="img"><img alt="India" data-search="flag India" data-desc="🇮🇳" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/in.png"><div class="desc">India</div></div></div>
+<div class="responsive"><div class="img"><img alt="Indonesia" data-search="flag Indonesia" data-desc="🇮🇩" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/id.png"><div class="desc">Indonesia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Iraq" data-search="flag Iraq" data-desc="🇮🇶" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/iq.png"><div class="desc">Iraq</div></div></div>
+<div class="responsive"><div class="img"><img alt="Ireland" data-search="flag Ireland" data-desc="🇮🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ie.png"><div class="desc">Ireland</div></div></div>
+<div class="responsive"><div class="img"><img alt="Isle of Man" data-search="flag Isle of Man" data-desc="🇮🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/im.png"><div class="desc">Isle of Man</div></div></div>
+<div class="responsive"><div class="img"><img alt="Israel" data-search="flag Israel" data-desc="🇮🇱" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/il.png"><div class="desc">Israel</div></div></div>
+<div class="responsive"><div class="img"><img alt="Italy" data-search="flag Italy" data-desc="🇮🇹" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/it.png"><div class="desc">Italy</div></div></div>
+<div class="responsive"><div class="img"><img alt="Jamaica" data-search="flag Jamaica" data-desc="🇯🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/jm.png"><div class="desc">Jamaica</div></div></div>
+<div class="responsive"><div class="img"><img alt="Japan" data-search="flag Japan" data-desc="🇯🇵" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/jp.png"><div class="desc">Japan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Jersey" data-search="flag Jersey" data-desc="🇯🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/je.png"><div class="desc">Jersey</div></div></div>
+<div class="responsive"><div class="img"><img alt="Jordan" data-search="flag Jordan" data-desc="🇯🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/jo.png"><div class="desc">Jordan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Kazakhstan" data-search="flag Kazakhstan" data-desc="🇰🇿" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/kz.png"><div class="desc">Kazakhstan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Kenya" data-search="flag Kenya" data-desc="🇰🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ke.png"><div class="desc">Kenya</div></div></div>
+<div class="responsive"><div class="img"><img alt="Kiribati" data-search="flag Kiribati" data-desc="🇰🇮" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ki.png"><div class="desc">Kiribati</div></div></div>
+<div class="responsive"><div class="img"><img alt="North Korea" data-search="flag North Korea" data-desc="🇰🇵" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/kp.png"><div class="desc">North Korea</div></div></div>
+<div class="responsive"><div class="img"><img alt="South Korea" data-search="flag South Korea" data-desc="🇰🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/kr.png"><div class="desc">South Korea</div></div></div>
+<div class="responsive"><div class="img"><img alt="Kuwait" data-search="flag Kuwait" data-desc="🇰🇼" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/kw.png"><div class="desc">Kuwait</div></div></div>
+<div class="responsive"><div class="img"><img alt="Kyrgyzstan" data-search="flag Kyrgyzstan" data-desc="🇰🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/kg.png"><div class="desc">Kyrgyzstan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Laos" data-search="flag Laos" data-desc="🇱🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/la.png"><div class="desc">Laos</div></div></div>
+<div class="responsive"><div class="img"><img alt="Latvia" data-search="flag Latvia" data-desc="🇱🇻" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/lv.png"><div class="desc">Latvia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Lebanon" data-search="flag Lebanon" data-desc="🇱🇧" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/lb.png"><div class="desc">Lebanon</div></div></div>
+<div class="responsive"><div class="img"><img alt="Lesotho" data-search="flag Lesotho" data-desc="🇱🇸" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ls.png"><div class="desc">Lesotho</div></div></div>
+<div class="responsive"><div class="img"><img alt="Liberia" data-search="flag Liberia" data-desc="🇱🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/lr.png"><div class="desc">Liberia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Liechtenstein" data-search="flag Liechtenstein" data-desc="🇱🇮" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/li.png"><div class="desc">Liechtenstein</div></div></div>
+<div class="responsive"><div class="img"><img alt="Lithuania" data-search="flag Lithuania" data-desc="🇱🇹" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/lt.png"><div class="desc">Lithuania</div></div></div>
+<div class="responsive"><div class="img"><img alt="Luxembourg" data-search="flag Luxembourg" data-desc="🇱🇺" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/lu.png"><div class="desc">Luxembourg</div></div></div>
+<div class="responsive"><div class="img"><img alt="Macau" data-search="flag Macau" data-desc="🇲🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mo.png"><div class="desc">Macau</div></div></div>
+<div class="responsive"><div class="img"><img alt="Madagascar" data-search="flag Madagascar" data-desc="🇲🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mg.png"><div class="desc">Madagascar</div></div></div>
+<div class="responsive"><div class="img"><img alt="Malawi" data-search="flag Malawi" data-desc="🇲🇼" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mw.png"><div class="desc">Malawi</div></div></div>
+<div class="responsive"><div class="img"><img alt="Malaysia" data-search="flag Malaysia" data-desc="🇲🇾" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/my.png"><div class="desc">Malaysia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Maldives" data-search="flag Maldives" data-desc="🇲🇻" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mv.png"><div class="desc">Maldives</div></div></div>
+<div class="responsive"><div class="img"><img alt="Mali" data-search="flag Mali" data-desc="🇲🇱" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ml.png"><div class="desc">Mali</div></div></div>
+<div class="responsive"><div class="img"><img alt="Malta" data-search="flag Malta" data-desc="🇲🇹" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mt.png"><div class="desc">Malta</div></div></div>
+<div class="responsive"><div class="img"><img alt="Marshall Islands" data-search="flag Marshall Islands" data-desc="🇲🇭" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mh.png"><div class="desc">Marshall Islands</div></div></div>
+<div class="responsive"><div class="img"><img alt="Martinique" data-search="flag Martinique" data-desc="🇲🇶" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mq.png"><div class="desc">Martinique</div></div></div>
+<div class="responsive"><div class="img"><img alt="Mauritania" data-search="flag Mauritania" data-desc="🇲🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mr.png"><div class="desc">Mauritania</div></div></div>
+<div class="responsive"><div class="img"><img alt="Mauritius" data-search="flag Mauritius" data-desc="🇲🇺" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mu.png"><div class="desc">Mauritius</div></div></div>
+<div class="responsive"><div class="img"><img alt="Mayotte" data-search="flag Mayotte" data-desc="🇾🇹" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/yt.png"><div class="desc">Mayotte</div></div></div>
+<div class="responsive"><div class="img"><img alt="Mexico" data-search="flag Mexico" data-desc="🇲🇽" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mx.png"><div class="desc">Mexico</div></div></div>
+<div class="responsive"><div class="img"><img alt="Moldova" data-search="flag Moldova" data-desc="🇲🇩" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/md.png"><div class="desc">Moldova</div></div></div>
+<div class="responsive"><div class="img"><img alt="Monaco" data-search="flag Monaco" data-desc="🇲🇨" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mc.png"><div class="desc">Monaco</div></div></div>
+<div class="responsive"><div class="img"><img alt="Mongolia" data-search="flag Mongolia" data-desc="🇲🇳" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mn.png"><div class="desc">Mongolia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Montenegro" data-search="flag Montenegro" data-desc="🇲🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/me.png"><div class="desc">Montenegro</div></div></div>
+<div class="responsive"><div class="img"><img alt="Montserrat" data-search="flag Montserrat" data-desc="🇲🇸" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ms.png"><div class="desc">Montserrat</div></div></div>
+<div class="responsive"><div class="img"><img alt="Morocco" data-search="flag Morocco" data-desc="🇲🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ma.png"><div class="desc">Morocco</div></div></div>
+<div class="responsive"><div class="img"><img alt="Mozambique" data-search="flag Mozambique" data-desc="🇲🇿" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mz.png"><div class="desc">Mozambique</div></div></div>
+<div class="responsive"><div class="img"><img alt="Myanmar" data-search="flag Myanmar" data-desc="🇲🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mm.png"><div class="desc">Myanmar</div></div></div>
+<div class="responsive"><div class="img"><img alt="Namibia" data-search="flag Namibia" data-desc="🇳🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/na.png"><div class="desc">Namibia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Nauru" data-search="flag Nauru" data-desc="🇳🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/nr.png"><div class="desc">Nauru</div></div></div>
+<div class="responsive"><div class="img"><img alt="Nepal" data-search="flag Nepal" data-desc="🇳🇵" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/np.png"><div class="desc">Nepal</div></div></div>
+<div class="responsive"><div class="img"><img alt="Netherlands" data-search="flag Netherlands" data-desc="🇳🇱" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/nl.png"><div class="desc">Netherlands</div></div></div>
+<div class="responsive"><div class="img"><img alt="New Caledonia" data-search="flag New Caledonia" data-desc="🇳🇨" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/nc.png"><div class="desc">New Caledonia</div></div></div>
+<div class="responsive"><div class="img"><img alt="New Zealand" data-search="flag New Zealand" data-desc="🇳🇿" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/nz.png"><div class="desc">New Zealand</div></div></div>
+<div class="responsive"><div class="img"><img alt="Nicaragua" data-search="flag Nicaragua" data-desc="🇳🇮" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ni.png"><div class="desc">Nicaragua</div></div></div>
+<div class="responsive"><div class="img"><img alt="Niger" data-search="flag Niger" data-desc="🇳🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ne.png"><div class="desc">Niger</div></div></div>
+<div class="responsive"><div class="img"><img alt="Nigeria" data-search="flag Nigeria" data-desc="🇳🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ng.png"><div class="desc">Nigeria</div></div></div>
+<div class="responsive"><div class="img"><img alt="Niue" data-search="flag Niue" data-desc="🇳🇺" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/nu.png"><div class="desc">Niue</div></div></div>
+<div class="responsive"><div class="img"><img alt="Norfolk Island" data-search="flag Norfolk Island" data-desc="🇳🇫" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/nf.png"><div class="desc">Norfolk Island</div></div></div>
+<div class="responsive"><div class="img"><img alt="Northern Mariana Islands" data-search="flag Northern Mariana Islands" data-desc="🇲🇵" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mp.png"><div class="desc">Northern Mariana Islands</div></div></div>
+<div class="responsive"><div class="img"><img alt="Norway" data-search="flag Norway" data-desc="🇳🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/no.png"><div class="desc">Norway</div></div></div>
+<div class="responsive"><div class="img"><img alt="Oman" data-search="flag Oman" data-desc="🇴🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/om.png"><div class="desc">Oman</div></div></div>
+<div class="responsive"><div class="img"><img alt="Pakistan" data-search="flag Pakistan" data-desc="🇵🇰" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/pk.png"><div class="desc">Pakistan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Palau" data-search="flag Palau" data-desc="🇵🇼" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/pw.png"><div class="desc">Palau</div></div></div>
+<div class="responsive"><div class="img"><img alt="Palestine" data-search="flag Palestine" data-desc="🇵🇸" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ps.png"><div class="desc">Palestine</div></div></div>
+<div class="responsive"><div class="img"><img alt="Panama" data-search="flag Panama" data-desc="🇵🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/pa.png"><div class="desc">Panama</div></div></div>
+<div class="responsive"><div class="img"><img alt="Papua New Guinea" data-search="flag Papua New Guinea" data-desc="🇵🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/pg.png"><div class="desc">Papua New Guinea</div></div></div>
+<div class="responsive"><div class="img"><img alt="Paraguay" data-search="flag Paraguay" data-desc="🇵🇾" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/py.png"><div class="desc">Paraguay</div></div></div>
+<div class="responsive"><div class="img"><img alt="Peru" data-search="flag Peru" data-desc="🇵🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/pe.png"><div class="desc">Peru</div></div></div>
+<div class="responsive"><div class="img"><img alt="Philippines" data-search="flag Philippines" data-desc="🇵🇭" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ph.png"><div class="desc">Philippines</div></div></div>
+<div class="responsive"><div class="img"><img alt="Poland" data-search="flag Poland" data-desc="🇵🇱" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/pl.png"><div class="desc">Poland</div></div></div>
+<div class="responsive"><div class="img"><img alt="Portugal" data-search="flag Portugal" data-desc="🇵🇹" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/pt.png"><div class="desc">Portugal</div></div></div>
+<div class="responsive"><div class="img"><img alt="Puerto Rico" data-search="flag Puerto Rico" data-desc="🇵🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/pr.png"><div class="desc">Puerto Rico</div></div></div>
+<div class="responsive"><div class="img"><img alt="Qatar" data-search="flag Qatar" data-desc="🇶🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/qa.png"><div class="desc">Qatar</div></div></div>
+<div class="responsive"><div class="img"><img alt="Romania" data-search="flag Romania" data-desc="🇷🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ro.png"><div class="desc">Romania</div></div></div>
+<div class="responsive"><div class="img"><img alt="Russia" data-search="flag Russia" data-desc="🇷🇺" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ru.png"><div class="desc">Russia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Rwanda" data-search="flag Rwanda" data-desc="🇷🇼" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/rw.png"><div class="desc">Rwanda</div></div></div>
+<div class="responsive"><div class="img"><img alt="Saint Helena, Ascension and Tristan da Cunha" data-search="flag Saint Helena, Ascension and Tristan da Cunha" data-desc="🇸🇭" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sh.png"><div class="desc">Saint Helena, Ascension and Tristan da Cunha</div></div></div>
+<div class="responsive"><div class="img"><img alt="Saint Kitts and Nevis" data-search="flag Saint Kitts and Nevis" data-desc="🇰🇳" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/kn.png"><div class="desc">Saint Kitts and Nevis</div></div></div>
+<div class="responsive"><div class="img"><img alt="Saint Lucia" data-search="flag Saint Lucia" data-desc="🇱🇨" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/lc.png"><div class="desc">Saint Lucia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Saint Martin" data-search="flag Saint Martin" data-desc="🇲🇫" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/mf.png"><div class="desc">Saint Martin</div></div></div>
+<div class="responsive"><div class="img"><img alt="Saint Pierre and Miquelon" data-search="flag Saint Pierre and Miquelon" data-desc="🇵🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/pm.png"><div class="desc">Saint Pierre and Miquelon</div></div></div>
+<div class="responsive"><div class="img"><img alt="Samoa" data-search="flag Samoa" data-desc="🇼🇸" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ws.png"><div class="desc">Samoa</div></div></div>
+<div class="responsive"><div class="img"><img alt="San Marino" data-search="flag San Marino" data-desc="🇸🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sm.png"><div class="desc">San Marino</div></div></div>
+<div class="responsive"><div class="img"><img alt="Saudi Arabia" data-search="flag Saudi Arabia" data-desc="🇸🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sa.png"><div class="desc">Saudi Arabia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Senegal" data-search="flag Senegal" data-desc="🇸🇳" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sn.png"><div class="desc">Senegal</div></div></div>
+<div class="responsive"><div class="img"><img alt="Serbia" data-search="flag Serbia" data-desc="🇷🇸" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/rs.png"><div class="desc">Serbia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Seychelles" data-search="flag Seychelles" data-desc="🇸🇨" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sc.png"><div class="desc">Seychelles</div></div></div>
+<div class="responsive"><div class="img"><img alt="Sierra Leone" data-search="flag Sierra Leone" data-desc="🇸🇱" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sl.png"><div class="desc">Sierra Leone</div></div></div>
+<div class="responsive"><div class="img"><img alt="Singapore" data-search="flag Singapore" data-desc="🇸🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sg.png"><div class="desc">Singapore</div></div></div>
+<div class="responsive"><div class="img"><img alt="Slovakia" data-search="flag Slovakia" data-desc="🇸🇰" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sk.png"><div class="desc">Slovakia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Slovenia" data-search="flag Slovenia" data-desc="🇸🇮" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/si.png"><div class="desc">Slovenia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Solomon Islands" data-search="flag Solomon Islands" data-desc="🇸🇧" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sb.png"><div class="desc">Solomon Islands</div></div></div>
+<div class="responsive"><div class="img"><img alt="Somalia" data-search="flag Somalia" data-desc="🇸🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/so.png"><div class="desc">Somalia</div></div></div>
+<div class="responsive"><div class="img"><img alt="South Africa" data-search="flag South Africa" data-desc="🇿🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/za.png"><div class="desc">South Africa</div></div></div>
+<div class="responsive"><div class="img"><img alt="Spain" data-search="flag Spain" data-desc="🇪🇸" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/es.png"><div class="desc">Spain</div></div></div>
+<div class="responsive"><div class="img"><img alt="Sri Lanka" data-search="flag Sri Lanka" data-desc="🇱🇰" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/lk.png"><div class="desc">Sri Lanka</div></div></div>
+<div class="responsive"><div class="img"><img alt="Sudan" data-search="flag Sudan" data-desc="🇸🇩" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sd.png"><div class="desc">Sudan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Suriname" data-search="flag Suriname" data-desc="🇸🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sr.png"><div class="desc">Suriname</div></div></div>
+<div class="responsive"><div class="img"><img alt="Svalbard and Jan Mayen" data-search="flag Svalbard and Jan Mayen" data-desc="🇸🇯" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sj.png"><div class="desc">Svalbard and Jan Mayen</div></div></div>
+<div class="responsive"><div class="img"><img alt="Sweden" data-search="flag Sweden" data-desc="🇸🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/se.png"><div class="desc">Sweden</div></div></div>
+<div class="responsive"><div class="img"><img alt="Switzerland" data-search="flag Switzerland" data-desc="🇨🇭" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ch.png"><div class="desc">Switzerland</div></div></div>
+<div class="responsive"><div class="img"><img alt="Syria" data-search="flag Syria" data-desc="🇸🇾" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/sy.png"><div class="desc">Syria</div></div></div>
+<div class="responsive"><div class="img"><img alt="Taiwan" data-search="flag Taiwan" data-desc="🇹🇼" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tw.png"><div class="desc">Taiwan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Tajikistan" data-search="flag Tajikistan" data-desc="🇹🇯" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tj.png"><div class="desc">Tajikistan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Tanzania" data-search="flag Tanzania" data-desc="🇹🇿" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tz.png"><div class="desc">Tanzania</div></div></div>
+<div class="responsive"><div class="img"><img alt="Thailand" data-search="flag Thailand" data-desc="🇹🇭" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/th.png"><div class="desc">Thailand</div></div></div>
+<div class="responsive"><div class="img"><img alt="Timor-Leste" data-search="flag Timor-Leste" data-desc="🇹🇱" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tl.png"><div class="desc">Timor-Leste</div></div></div>
+<div class="responsive"><div class="img"><img alt="Togo" data-search="flag Togo" data-desc="🇹🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tg.png"><div class="desc">Togo</div></div></div>
+<div class="responsive"><div class="img"><img alt="Tokelau" data-search="flag Tokelau" data-desc="🇹🇰" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tk.png"><div class="desc">Tokelau</div></div></div>
+<div class="responsive"><div class="img"><img alt="Tonga" data-search="flag Tonga" data-desc="🇹🇴" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/to.png"><div class="desc">Tonga</div></div></div>
+<div class="responsive"><div class="img"><img alt="Trinidad and Tobago" data-search="flag Trinidad and Tobago" data-desc="🇹🇹" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tt.png"><div class="desc">Trinidad and Tobago</div></div></div>
+<div class="responsive"><div class="img"><img alt="Tunisia" data-search="flag Tunisia" data-desc="🇹🇳" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tn.png"><div class="desc">Tunisia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Turkey" data-search="flag Turkey" data-desc="🇹🇷" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tr.png"><div class="desc">Turkey</div></div></div>
+<div class="responsive"><div class="img"><img alt="Turkmenistan" data-search="flag Turkmenistan" data-desc="🇹🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tm.png"><div class="desc">Turkmenistan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Turks and Caicos Islands" data-search="flag Turks and Caicos Islands" data-desc="🇹🇨" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tc.png"><div class="desc">Turks and Caicos Islands</div></div></div>
+<div class="responsive"><div class="img"><img alt="Tuvalu" data-search="flag Tuvalu" data-desc="🇹🇻" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/tv.png"><div class="desc">Tuvalu</div></div></div>
+<div class="responsive"><div class="img"><img alt="Uganda" data-search="flag Uganda" data-desc="🇺🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ug.png"><div class="desc">Uganda</div></div></div>
+<div class="responsive"><div class="img"><img alt="Ukraine" data-search="flag Ukraine" data-desc="🇺🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ua.png"><div class="desc">Ukraine</div></div></div>
+<div class="responsive"><div class="img"><img alt="United Arab Emirates" data-search="flag United Arab Emirates" data-desc="🇦🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ae.png"><div class="desc">United Arab Emirates</div></div></div>
+<div class="responsive"><div class="img"><img alt="United Kingdom" data-search="flag United Kingdom" data-desc="🇬🇧" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/gb.png"><div class="desc">United Kingdom</div></div></div>
+<div class="responsive"><div class="img"><img alt="United States" data-search="flag United States" data-desc="🇺🇸" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/us.png"><div class="desc">United States</div></div></div>
+<div class="responsive"><div class="img"><img alt="Uruguay" data-search="flag Uruguay" data-desc="🇺🇾" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/uy.png"><div class="desc">Uruguay</div></div></div>
+<div class="responsive"><div class="img"><img alt="Uzbekistan" data-search="flag Uzbekistan" data-desc="🇺🇿" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/uz.png"><div class="desc">Uzbekistan</div></div></div>
+<div class="responsive"><div class="img"><img alt="Vanuatu" data-search="flag Vanuatu" data-desc="🇻🇺" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/vu.png"><div class="desc">Vanuatu</div></div></div>
+<div class="responsive"><div class="img"><img alt="Vatican City (Holy See)" data-search="flag Vatican City (Holy See)" data-desc="🇻🇦" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/va.png"><div class="desc">Vatican City (Holy See)</div></div></div>
+<div class="responsive"><div class="img"><img alt="Venezuela" data-search="flag Venezuela" data-desc="🇻🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ve.png"><div class="desc">Venezuela</div></div></div>
+<div class="responsive"><div class="img"><img alt="Vietnam" data-search="flag Vietnam" data-desc="🇻🇳" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/vn.png"><div class="desc">Vietnam</div></div></div>
+<div class="responsive"><div class="img"><img alt="British Virgin Islands" data-search="flag British Virgin Islands" data-desc="🇻🇬" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/vg.png"><div class="desc">British Virgin Islands</div></div></div>
+<div class="responsive"><div class="img"><img alt="United States Virgin Islands" data-search="flag United States Virgin Islands" data-desc="🇻🇮" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/vi.png"><div class="desc">United States Virgin Islands</div></div></div>
+<div class="responsive"><div class="img"><img alt="Wallis and Futuna" data-search="flag Wallis and Futuna" data-desc="🇼🇫" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/wf.png"><div class="desc">Wallis and Futuna</div></div></div>
+<div class="responsive"><div class="img"><img alt="Western Sahara" data-search="flag Western Sahara" data-desc="🇪🇭" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/eh.png"><div class="desc">Western Sahara</div></div></div>
+<div class="responsive"><div class="img"><img alt="Yemen" data-search="flag Yemen" data-desc="🇾🇪" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/ye.png"><div class="desc">Yemen</div></div></div>
+<div class="responsive"><div class="img"><img alt="Zambia" data-search="flag Zambia" data-desc="🇿🇲" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/zm.png"><div class="desc">Zambia</div></div></div>
+<div class="responsive"><div class="img"><img alt="Zimbabwe" data-search="flag Zimbabwe" data-desc="🇿🇼" onclick="showFullScreen(this)" src="https://flagcdn.com/w320/zw.png"><div class="desc">Zimbabwe</div></div></div>
             <div class="clearfix"></div>
         </div>
     </div>
@@ -282,6 +618,22 @@
 
         function closeDoodlesModal() {
             document.getElementById('doodlesModal').style.display = 'none';
+        }
+
+        function openAnimalsModal() {
+            document.getElementById('animalsModal').style.display = 'block';
+        }
+
+        function closeAnimalsModal() {
+            document.getElementById('animalsModal').style.display = 'none';
+        }
+
+        function openFlagsModal() {
+            document.getElementById('flagsModal').style.display = 'block';
+        }
+
+        function closeFlagsModal() {
+            document.getElementById('flagsModal').style.display = 'none';
         }
             
         let currentSearchTerm = "";
