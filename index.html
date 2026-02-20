@@ -230,7 +230,6 @@
         </div>
     </div>
 
-    
     <!-- MODAL ANIMALS -->
     <div id="animalsModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:#f4f7f6; font-family: sans-serif;">
         <div style="background: #fff; padding: 15px 20px; border-bottom: 1px solid #ddd; display: flex; align-items: center; position: sticky; top: 0; z-index: 100;">
@@ -638,96 +637,12 @@
             
         let currentSearchTerm = "";
 
-        let touchStartDistance = 0;
-        let currentScale = 1;
-        let offsetX = 0;
-        let offsetY = 0;
-        let lastTouchX = 0;
-        let lastTouchY = 0;
-
-        function getDistance(touches) {
-            if (touches.length < 2) return 0;
-            const dx = touches[0].clientX - touches[1].clientX;
-            const dy = touches[0].clientY - touches[1].clientY;
-            return Math.sqrt(dx * dx + dy * dy);
-        }
-
-        function getMidpoint(touches) {
-            return {
-                x: (touches[0].clientX + touches[1].clientX) / 2,
-                y: (touches[0].clientY + touches[1].clientY) / 2
-            };
-        }
-
-        function updateImageTransform() {
-            const img = document.getElementById('fsImg');
-            img.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${currentScale})`;
-        }
-
-        function handleTouchStart(e) {
-            if (e.touches.length === 2) {
-                touchStartDistance = getDistance(e.touches);
-                lastTouchX = getMidpoint(e.touches).x;
-                lastTouchY = getMidpoint(e.touches).y;
-            } else if (e.touches.length === 1 && currentScale > 1) {
-                lastTouchX = e.touches[0].clientX;
-                lastTouchY = e.touches[0].clientY;
-            }
-        }
-
-        function handleTouchMove(e) {
-            const img = document.getElementById('fsImg');
-            const overlay = document.getElementById('fsOverlay');
-            
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                const currentDistance = getDistance(e.touches);
-                const midpoint = getMidpoint(e.touches);
-                
-                // Calcular novo scale
-                const newScale = Math.max(1, Math.min(3, (currentDistance / touchStartDistance) * currentScale));
-                const scaleDiff = newScale - currentScale;
-                
-                // Ajustar offset para manter o ponto de zoom centralizado
-                offsetX -= (midpoint.x - overlay.offsetWidth / 2) * scaleDiff / currentScale;
-                offsetY -= (midpoint.y - overlay.offsetHeight / 2) * scaleDiff / currentScale;
-                
-                currentScale = newScale;
-                updateImageTransform();
-                
-                lastTouchX = midpoint.x;
-                lastTouchY = midpoint.y;
-            } else if (e.touches.length === 1 && currentScale > 1) {
-                e.preventDefault();
-                const deltaX = e.touches[0].clientX - lastTouchX;
-                const deltaY = e.touches[0].clientY - lastTouchY;
-                
-                // Limitar o pan para nao sair da tela
-                const maxOffsetX = (img.offsetWidth * currentScale - overlay.offsetWidth) / 2;
-                const maxOffsetY = (img.offsetHeight * currentScale - overlay.offsetHeight) / 2;
-                
-                offsetX = Math.max(-maxOffsetX, Math.min(maxOffsetX, offsetX + deltaX));
-                offsetY = Math.max(-maxOffsetY, Math.min(maxOffsetY, offsetY + deltaY));
-                
-                updateImageTransform();
-                
-                lastTouchX = e.touches[0].clientX;
-                lastTouchY = e.touches[0].clientY;
-            }
-        }
-
-        function handleTouchEnd(e) {
-            touchStartDistance = 0;
-        }
+                let currentSearchTerm = "";
 
         function showFullScreen(el) {
             const img = document.getElementById('fsImg');
             img.src = el.src;
             img.alt = el.dataset.desc;
-            img.style.transform = 'translate(0px, 0px) scale(1)';
-            currentScale = 1;
-            offsetX = 0;
-            offsetY = 0;
             
             currentSearchTerm = el.dataset.search || "";
             
@@ -738,16 +653,8 @@
             const overlay = document.getElementById('fsOverlay');
             overlay.style.display = 'flex';
             
-            // Adicionar listeners de touch para zoom
-            overlay.addEventListener('touchstart', handleTouchStart, { passive: false });
-            overlay.addEventListener('touchmove', handleTouchMove, { passive: false });
-            overlay.addEventListener('touchend', handleTouchEnd);
-            
             // Configurar botão de fechar
             document.getElementById('closeFsBtn').onclick = function() {
-                overlay.removeEventListener('touchstart', handleTouchStart);
-                overlay.removeEventListener('touchmove', handleTouchMove);
-                overlay.removeEventListener('touchend', handleTouchEnd);
                 if (currentSearchTerm) {
                     window.location.replace('https://www.clipart.com/search.php?keys=' + encodeURIComponent(currentSearchTerm));
                 } else {
