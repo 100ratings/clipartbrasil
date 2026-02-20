@@ -640,7 +640,10 @@
 
         let touchStartDistance = 0;
         let currentScale = 1;
-        let imgTransformOrigin = { x: 0, y: 0 };
+        let offsetX = 0;
+        let offsetY = 0;
+        let lastTouchX = 0;
+        let lastTouchY = 0;
 
         function getDistance(touches) {
             if (touches.length < 2) return 0;
@@ -649,23 +652,67 @@
             return Math.sqrt(dx * dx + dy * dy);
         }
 
+        function getMidpoint(touches) {
+            return {
+                x: (touches[0].clientX + touches[1].clientX) / 2,
+                y: (touches[0].clientY + touches[1].clientY) / 2
+            };
+        }
+
+        function updateImageTransform() {
+            const img = document.getElementById('fsImg');
+            img.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${currentScale})`;
+        }
+
         function handleTouchStart(e) {
             if (e.touches.length === 2) {
                 touchStartDistance = getDistance(e.touches);
-                const img = document.getElementById('fsImg');
-                imgTransformOrigin.x = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-                imgTransformOrigin.y = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                lastTouchX = getMidpoint(e.touches).x;
+                lastTouchY = getMidpoint(e.touches).y;
+            } else if (e.touches.length === 1 && currentScale > 1) {
+                lastTouchX = e.touches[0].clientX;
+                lastTouchY = e.touches[0].clientY;
             }
         }
 
         function handleTouchMove(e) {
+            const img = document.getElementById('fsImg');
+            const overlay = document.getElementById('fsOverlay');
+            
             if (e.touches.length === 2) {
                 e.preventDefault();
                 const currentDistance = getDistance(e.touches);
-                const img = document.getElementById('fsImg');
-                currentScale = Math.max(1, Math.min(3, (currentDistance / touchStartDistance) * currentScale));
-                img.style.transform = `scale(${currentScale})`;
-                img.style.transformOrigin = `${imgTransformOrigin.x}px ${imgTransformOrigin.y}px`;
+                const midpoint = getMidpoint(e.touches);
+                
+                // Calcular novo scale
+                const newScale = Math.max(1, Math.min(3, (currentDistance / touchStartDistance) * currentScale));
+                const scaleDiff = newScale - currentScale;
+                
+                // Ajustar offset para manter o ponto de zoom centralizado
+                offsetX -= (midpoint.x - overlay.offsetWidth / 2) * scaleDiff / currentScale;
+                offsetY -= (midpoint.y - overlay.offsetHeight / 2) * scaleDiff / currentScale;
+                
+                currentScale = newScale;
+                updateImageTransform();
+                
+                lastTouchX = midpoint.x;
+                lastTouchY = midpoint.y;
+            } else if (e.touches.length === 1 && currentScale > 1) {
+                e.preventDefault();
+                const deltaX = e.touches[0].clientX - lastTouchX;
+                const deltaY = e.touches[0].clientY - lastTouchY;
+                
+                // Limitar o pan para nao sair da tela
+                const maxOffsetX = (img.offsetWidth * currentScale - overlay.offsetWidth) / 2;
+                const maxOffsetY = (img.offsetHeight * currentScale - overlay.offsetHeight) / 2;
+                
+                offsetX = Math.max(-maxOffsetX, Math.min(maxOffsetX, offsetX + deltaX));
+                offsetY = Math.max(-maxOffsetY, Math.min(maxOffsetY, offsetY + deltaY));
+                
+                updateImageTransform();
+                
+                lastTouchX = e.touches[0].clientX;
+                lastTouchY = e.touches[0].clientY;
             }
         }
 
@@ -677,8 +724,10 @@
             const img = document.getElementById('fsImg');
             img.src = el.src;
             img.alt = el.dataset.desc;
-            img.style.transform = 'scale(1)';
+            img.style.transform = 'translate(0px, 0px) scale(1)';
             currentScale = 1;
+            offsetX = 0;
+            offsetY = 0;
             
             currentSearchTerm = el.dataset.search || "";
             
