@@ -50,7 +50,7 @@
             z-index: 5 !important;
         }
 
-        @media only screen and (max-width: 768px) { #doodlesModal .responsive { width: 100% !important; float: none !important; display: block !important; padding: 5px !important; box-sizing: border-box !important; } #doodlesModal .img { margin: 0 !important; width: 100% !important; } #doodlesModal .img img { width: 100% !important; height: auto !important; } #doodlesModal .desc { font-size: 12px !important; padding: 5px !important; }         #animalsModal .responsive { width: 100% !important; float: none !important; display: block !important; padding: 5px !important; box-sizing: border-box !important; } #animalsModal .img { margin: 0 !important; width: 100% !important; } #animalsModal .img img { width: 100% !important; height: auto !important; } #animalsModal .desc { font-size: 12px !important; padding: 5px !important; }
+        @media only screen and (max-width: 768px) { #doodlesModal .responsive { width: 50% !important; float: left !important; display: inline-block !important; } #doodlesModal .img { margin: 0 !important; width: 100% !important; } #doodlesModal .img img { width: 100% !important; height: auto !important; } #doodlesModal .desc { font-size: 12px !important; padding: 5px !important; }         #animalsModal .responsive { width: 50% !important; float: left !important; display: inline-block !important; } #animalsModal .img { margin: 0 !important; width: 100% !important; } #animalsModal .img img { width: 100% !important; height: auto !important; } #animalsModal .desc { font-size: 12px !important; padding: 5px !important; }
         #flagsModal .responsive { width: 50% !important; float: left !important; display: inline-block !important; } #flagsModal .img { margin: 0 !important; width: 100% !important; } #flagsModal .img img { width: 100% !important; height: auto !important; } #flagsModal .desc { font-size: 12px !important; padding: 5px !important; } }
     </style>
 </head>
@@ -533,9 +533,9 @@
     </div>
 
     <!-- FULLSCREEN OVERLAY -->
-    <div id="fsOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:10000;">
-        <img id="fsImg" src="" style="max-width:90%; max-height:90%;" alt="Visualização">
-        <button id="closeFsBtn" style="position:absolute; top:20px; right:20px; padding:10px; background: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">FECHAR</button>
+    <div id="fsOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:10000; overflow:hidden; touch-action:manipulation;">
+        <img id="fsImg" src="" style="max-width:90%; max-height:90%; cursor:grab; user-select:none;" alt="Visualização">
+        <button id="closeFsBtn" style="position:absolute; top:20px; right:20px; padding:10px; background: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; z-index:10001;">FECHAR</button>
     </div>
 
     <script>
@@ -638,10 +638,47 @@
             
         let currentSearchTerm = "";
 
+        let touchStartDistance = 0;
+        let currentScale = 1;
+        let imgTransformOrigin = { x: 0, y: 0 };
+
+        function getDistance(touches) {
+            if (touches.length < 2) return 0;
+            const dx = touches[0].clientX - touches[1].clientX;
+            const dy = touches[0].clientY - touches[1].clientY;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        function handleTouchStart(e) {
+            if (e.touches.length === 2) {
+                touchStartDistance = getDistance(e.touches);
+                const img = document.getElementById('fsImg');
+                imgTransformOrigin.x = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                imgTransformOrigin.y = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+            }
+        }
+
+        function handleTouchMove(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const currentDistance = getDistance(e.touches);
+                const img = document.getElementById('fsImg');
+                currentScale = Math.max(1, Math.min(3, (currentDistance / touchStartDistance) * currentScale));
+                img.style.transform = `scale(${currentScale})`;
+                img.style.transformOrigin = `${imgTransformOrigin.x}px ${imgTransformOrigin.y}px`;
+            }
+        }
+
+        function handleTouchEnd(e) {
+            touchStartDistance = 0;
+        }
+
         function showFullScreen(el) {
             const img = document.getElementById('fsImg');
             img.src = el.src;
             img.alt = el.dataset.desc;
+            img.style.transform = 'scale(1)';
+            currentScale = 1;
             
             currentSearchTerm = el.dataset.search || "";
             
@@ -649,10 +686,19 @@
             copyToClipboardSilent(el.dataset.desc);
             
             // Mostrar overlay
-            document.getElementById('fsOverlay').style.display = 'flex';
+            const overlay = document.getElementById('fsOverlay');
+            overlay.style.display = 'flex';
+            
+            // Adicionar listeners de touch para zoom
+            overlay.addEventListener('touchstart', handleTouchStart, { passive: false });
+            overlay.addEventListener('touchmove', handleTouchMove, { passive: false });
+            overlay.addEventListener('touchend', handleTouchEnd);
             
             // Configurar botão de fechar
             document.getElementById('closeFsBtn').onclick = function() {
+                overlay.removeEventListener('touchstart', handleTouchStart);
+                overlay.removeEventListener('touchmove', handleTouchMove);
+                overlay.removeEventListener('touchend', handleTouchEnd);
                 if (currentSearchTerm) {
                     window.location.replace('https://www.clipart.com/search.php?keys=' + encodeURIComponent(currentSearchTerm));
                 } else {
